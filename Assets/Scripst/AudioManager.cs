@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 
+[System.Serializable]
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
@@ -51,10 +52,5 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Play(); // vai dar erro se o name estiver incorreto
-    }
-
-    public void ChangeVolume(float x)
-    {
-        Debug.Log("x:" + x);
     }
 }

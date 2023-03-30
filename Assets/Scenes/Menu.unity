@@ -156,7 +156,7 @@ RectTransform:
   m_Children:
   - {fileID: 1968435856}
   m_Father: {fileID: 373892490}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -558,19 +558,19 @@ MonoBehaviour:
   sounds:
   - name: Zelda
     clip: {fileID: 8300000, guid: 3f729594c4d021042929360270a082c9, type: 3}
-    volume: 0.04
+    volume: 0.1
     pitch: 1
     source: {fileID: 0}
     loop: 1
   - name: Britador
     clip: {fileID: 8300000, guid: deff0b3bfed440f41bf5aa382dd7d3a6, type: 3}
-    volume: 0.4
+    volume: 0.1
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Esteira
     clip: {fileID: 8300000, guid: 500017eaaf6415e43b8345527e52aa16, type: 3}
-    volume: 0.4
+    volume: 1
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -666,7 +666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255189061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -780,9 +780,9 @@ RectTransform:
   - {fileID: 596018074}
   - {fileID: 2084534725}
   - {fileID: 1192473905}
+  - {fileID: 1516091724}
   - {fileID: 985586984}
   - {fileID: 7919132}
-  - {fileID: 1516091724}
   m_Father: {fileID: 821942306}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1730,7 +1730,7 @@ RectTransform:
   - {fileID: 1966953749}
   - {fileID: 646119874}
   m_Father: {fileID: 373892490}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1784,7 +1784,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.111
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2350,10 +2350,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.111
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1578012379}
+        m_TargetAssemblyTypeName: MenuPrincipalManager, Assembly-CSharp
+        m_MethodName: slideVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1231796988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,7 +2837,7 @@ GameObject:
   - component: {fileID: 1516091724}
   - component: {fileID: 1516091725}
   m_Layer: 5
-  m_Name: VolumeMusicaButton
+  m_Name: SliderVolumeMusica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2848,7 +2860,7 @@ RectTransform:
   - {fileID: 613096320}
   - {fileID: 1111161920}
   m_Father: {fileID: 373892490}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2902,10 +2914,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.111
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1578012379}
+        m_TargetAssemblyTypeName: MenuPrincipalManager, Assembly-CSharp
+        m_MethodName: slideMusica
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1545956586
 GameObject:
   m_ObjectHideFlags: 0
@@ -2972,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041454aca30efed4ba746fc26a80993c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: {fileID: 221739093}
+  aud: {fileID: 221739093}
   nomeCena: Cena1
   painelMenuInicial: {fileID: 1286191173}
   painelOpcoes: {fileID: 373892489}

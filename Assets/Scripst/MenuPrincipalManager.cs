@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MenuPrincipalManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioManager x;
+    public AudioManager aud;
 
     [SerializeField]
     private string nomeCena;
@@ -30,13 +31,14 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void fecharOpcoes()
     {
-        // Debug.Log("1");
-        // x.sounds[0].volume = 0;
-        // x.sounds[2].volume = 0;
-        Debug.Log("2");
+        Debug.Log("fechar opcoes");
 
-        x.ChangeVolume(0.15f);
-        Debug.Log("3");
+        aud.sounds[0].source.volume = aud.sounds[0].volume;
+        for (short i = 1; i < 2; i++)
+        {
+            aud.sounds[i].source.volume = aud.sounds[i].volume;
+        }
+
         painelOpcoes.SetActive(false);
         painelMenuInicial.SetActive(true);
     }
@@ -45,5 +47,27 @@ public class MenuPrincipalManager : MonoBehaviour
     {
         Debug.Log("Closing");
         Application.Quit();
+    }
+
+    public void slideMusica(float x)
+    {
+        if (aud.sounds != null && aud.sounds.Length > 0)
+            aud.sounds[0].volume = x;
+    }
+
+    /**
+     *
+     * Mudar o volume dos equipamentos da planta. O vetor comeca em 1 e termina no numero maximo de sons diferentes dos equipamentos.
+     * o 0 e do tema musical de fundo controlado pelo slideMusica.
+     */
+    public void slideVolume(float x)
+    {
+        if (aud.sounds != null && aud.sounds.Length > 0)
+        {
+            for (short i = 1; i < 2; i++)
+            {
+                aud.sounds[i].volume = x;
+            }
+        }
     }
 }
