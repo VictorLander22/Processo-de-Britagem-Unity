@@ -52,8 +52,9 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Play(); // vai dar erro se o name estiver incorreto
     }
-    // public void mudarVolume(float x)
-    // {
-    //     Sound s = Array.data[0].volume = x;
-    // }
+
+    public void ChangeVolume(float x)
+    {
+        Debug.Log("x:" + x);
+    }
 }

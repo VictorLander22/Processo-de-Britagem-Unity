@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class MenuPrincipalManager : MonoBehaviour
 {
     [SerializeField]
+    private AudioManager x;
+
+    [SerializeField]
     private string nomeCena;
 
     [SerializeField]
@@ -27,8 +30,13 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void fecharOpcoes()
     {
-        // sounds.Array.data[0].volume = m_Value;
-        // sounds.Array.data[1].volume = m_Value;
+        // Debug.Log("1");
+        // x.sounds[0].volume = 0;
+        // x.sounds[2].volume = 0;
+        Debug.Log("2");
+
+        x.ChangeVolume(0.15f);
+        Debug.Log("3");
         painelOpcoes.SetActive(false);
         painelMenuInicial.SetActive(true);
     }
