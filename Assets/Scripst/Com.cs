@@ -6,15 +6,17 @@ using S7.Net.Types;
 using System;
 using UnityEngine.UI;
 
+
+
 public class Com : MonoBehaviour
 {
     Plc plc;
+    
+    public Text contato;
+    public Text bobina;
 
-    // public Text contato;
-    // public Text bobina;
-
-    // public Button inputToggle;
-    //  public Button stopButton;
+    public Button inputToggle;
+    public Button stopButton;
 
     private bool estado;
 
@@ -23,37 +25,28 @@ public class Com : MonoBehaviour
     {
         plc = new Plc(CpuType.S7300, "127.0.0.1", 0, 1);
         plc.Open();
-
-        // if (plc.IsConnected)
-        // {
-        //     Debug.Log("PLC conectado!");
-        // }
-        // else
-        // {
-        //     Debug.Log("PLC desconectado!");
-        // }
-
-        //  inputToggle.onClick.AddListener(ToggleInput);
-        //  stopButton.onClick.AddListener(StopConnection);
+        
+        inputToggle.onClick.AddListener(ToggleInput);
+        stopButton.onClick.AddListener(StopConnection);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //  try
-        // {
-        bool Bool2 = (bool)plc.Read("DB1.DBX0.1");
-        // bobina.text = Bool2.ToString();
+      //  try
+      // {
+            bool Bool2 = (bool)plc.Read("DB1.DBX0.1");
+            bobina.text = Bool2.ToString();
 
-        if (plc.IsConnected)
-        {
-            plc.Write("DB1.DBX0.0", estado);
-            bool Bool1 = (bool)plc.Read("DB1.DBX0.0");
-            //  contato.text = Bool1.ToString();
-            estado = Bool1;
-        }
-        //o cath do PLC exception esta dando problema
-        //   }
+            if (plc.IsConnected)
+            {
+                plc.Write("DB1.DBX0.0", estado);
+                bool Bool1 = (bool)plc.Read("DB1.DBX0.0");
+                contato.text = Bool1.ToString();
+                estado = Bool1;
+            }
+            //o cath do PLC exception esta dando problema
+     //   }
         // catch (PLCException e)
         // {
         //     Debug.LogError(e.Message);
