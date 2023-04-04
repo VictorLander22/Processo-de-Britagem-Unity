@@ -26,8 +26,8 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        // garante q o audio n vai parar de tocar ao trocar de cena
-        DontDestroyOnLoad(gameObject);
+
+        // DontDestroyOnLoad(gameObject); // Esta causando um bug sair e voltar a cena de menu principal.Retorna NullException.
 
         foreach (Sound s in sounds)
         {

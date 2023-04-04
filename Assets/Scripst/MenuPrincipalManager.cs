@@ -31,10 +31,9 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void fecharOpcoes()
     {
-        Debug.Log("fechar opcoes");
-
         aud.sounds[0].source.volume = aud.sounds[0].volume;
-        for (short i = 1; i < 2; i++)
+
+        for (short i = 1; i < (aud.sounds.Length - 1); i++)
         {
             aud.sounds[i].source.volume = aud.sounds[i].volume;
         }
@@ -64,7 +63,8 @@ public class MenuPrincipalManager : MonoBehaviour
     {
         if (aud.sounds != null && aud.sounds.Length > 0)
         {
-            for (short i = 1; i < 2; i++)
+            //Debug.Log("Length: " + (aud.sounds.Length - 1));
+            for (short i = 1; i < (aud.sounds.Length - 1); i++)
             {
                 aud.sounds[i].volume = x;
             }
