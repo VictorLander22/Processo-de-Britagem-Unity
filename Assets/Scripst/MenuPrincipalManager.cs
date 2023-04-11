@@ -7,7 +7,7 @@ using System;
 public class MenuPrincipalManager : MonoBehaviour
 {
     [SerializeField]
-    public AudioManager aud;
+    private AudioManager aud;
 
     [SerializeField]
     private string nomeCena;
@@ -17,6 +17,16 @@ public class MenuPrincipalManager : MonoBehaviour
 
     [SerializeField]
     private GameObject painelOpcoes;
+
+    void Start()
+    {
+        // Procura pelo audio preservado entre as cenas
+        aud = FindObjectOfType<AudioManager>();
+        if (aud == null)
+        {
+            Debug.LogError("Aud null");
+        }
+    }
 
     public void abrir() // metodo do botao Abrir do menu
     {

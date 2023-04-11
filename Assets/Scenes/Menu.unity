@@ -558,19 +558,19 @@ MonoBehaviour:
   sounds:
   - name: Zelda
     clip: {fileID: 8300000, guid: 3f729594c4d021042929360270a082c9, type: 3}
-    volume: 0.1
+    volume: 0
     pitch: 1
     source: {fileID: 0}
     loop: 1
   - name: Britador
     clip: {fileID: 8300000, guid: deff0b3bfed440f41bf5aa382dd7d3a6, type: 3}
-    volume: 0.1
+    volume: 0
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Esteira
     clip: {fileID: 8300000, guid: 500017eaaf6415e43b8345527e52aa16, type: 3}
-    volume: 1
+    volume: 0
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -2350,7 +2350,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2914,7 +2914,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

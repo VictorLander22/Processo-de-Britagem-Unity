@@ -20,14 +20,15 @@ public class AudioManager : MonoBehaviour
     {
         // garante que n vai carregar mais de uma lista de arquivos de som
         if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(gameObject); // Esta causando um bug sair e voltar a cena de menu principal.Retorna NullException.
+        }
         else
         {
             Destroy(gameObject);
             return;
         }
-
-        // DontDestroyOnLoad(gameObject); // Esta causando um bug sair e voltar a cena de menu principal.Retorna NullException.
 
         foreach (Sound s in sounds)
         {
