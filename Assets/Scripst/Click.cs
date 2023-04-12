@@ -17,6 +17,7 @@ public class Click : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log("Clique detectado!");
+        FindObjectOfType<AudioManager>().Play("Britador");
 
         SceneManager.LoadScene(nomeCena);
     }

@@ -3000,6 +3000,8 @@ MonoBehaviour:
   nomeCena: Cena1
   painelMenuInicial: {fileID: 1286191173}
   painelOpcoes: {fileID: 373892489}
+  sliderMusic: {fileID: 1516091725}
+  sliderVolum: {fileID: 1192473906}
 --- !u!4 &1578012380
 Transform:
   m_ObjectHideFlags: 0

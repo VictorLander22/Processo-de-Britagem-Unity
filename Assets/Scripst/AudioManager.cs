@@ -44,7 +44,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update() { }
 
-    public void Play(String name)
+    public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null) // verifica se consegue achar um arquivo com o nome de sim correto
