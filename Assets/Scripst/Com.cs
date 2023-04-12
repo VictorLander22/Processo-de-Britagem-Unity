@@ -23,6 +23,9 @@ public class Com : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        // Ip adrress :  192.168.0.1
+        // SubnetMask = 255.255.255.0
         plc = new Plc(CpuType.S7300, "127.0.0.1", 0, 1);
         plc.Open();
         
