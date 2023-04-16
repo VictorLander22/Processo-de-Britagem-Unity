@@ -6,7 +6,7 @@ using S7.Net.Types;
 using System;
 using UnityEngine.UI;
 
-
+// comunica com as DBs
 
 public class Com : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class Com : MonoBehaviour
 
         // Ip adrress :  192.168.0.1
         // SubnetMask = 255.255.255.0
-        plc = new Plc(CpuType.S7300, "127.0.0.1", 0, 1);
+        plc = new Plc(CpuType.S71200, "192.168.0.1", 0, 1);
         plc.Open();
         
         inputToggle.onClick.AddListener(ToggleInput);
@@ -38,6 +38,8 @@ public class Com : MonoBehaviour
     {
       //  try
       // {
+        //DBX e uma boleana
+        //DBW e para real
             bool Bool2 = (bool)plc.Read("DB1.DBX0.1");
             bobina.text = Bool2.ToString();
 
