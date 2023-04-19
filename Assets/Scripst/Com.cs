@@ -29,16 +29,8 @@ public class Com : MonoBehaviour
         // Ip adrress :  192.168.0.1
         // SubnetMask = 255.255.255.0
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
-        plc.Open();
-
-        if (plc.IsConnected)
-        {
-            Debug.Log("Conexão com PLC estabelecida");
-        }
-        else
-        {
-            Debug.LogError("Não foi possível estabelecer conexão com PLC");
-        }
+        plcConnect();
+     
     }
 
     // Update is called once per frame
@@ -49,7 +41,7 @@ public class Com : MonoBehaviour
 
         if (plc.IsConnected)
         {
-            bool outputValue = (bool)plc.Read("DB1.DBX0.1");
+            //bool outputValue = (bool)plc.Read("DB1.DBX0.1");
 
             // string address = "DB1.DBX0.0";
 
@@ -57,9 +49,35 @@ public class Com : MonoBehaviour
             // plc.Write(address, value);
         }
 
+
+
         //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
     }
     
+    public void plcConnect()
+    {
+        Debug.Log("1");
+
+     try
+    {
+        plc.Open();
+
+        if (plc.IsConnected)
+        {
+            Debug.Log("Conexão com PLC estabelecida");
+        }
+        else
+        {
+            Debug.LogError("Não foi possível estabelecer conexão com PLC");
+        }
+
+    }
+    catch (Exception ex)
+    {
+    Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+    }
+
+    }
     public void ToggleInput()
     {
         estado = !estado; // inverte o estado entre true e false.
