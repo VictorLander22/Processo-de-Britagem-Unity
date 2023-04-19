@@ -10,54 +10,56 @@ using UnityEngine.UI;
 
 public class Com : MonoBehaviour
 {
-    Plc plc;
-    
-    public Text contato;
-    public Text bobina;
+    [SerializeField]
+    private string ipAddress = "192.168.0.1";
 
-    public Button inputToggle;
-    public Button stopButton;
+    [SerializeField]
+    private short rack = 0;
+
+    [SerializeField]
+    private short slot = 1;
+
+    Plc plc;
 
     private bool estado;
 
     // Start is called before the first frame update
     void Start()
     {
-
         // Ip adrress :  192.168.0.1
         // SubnetMask = 255.255.255.0
-        plc = new Plc(CpuType.S71200, "192.168.0.1", 0, 1);
+        plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         plc.Open();
-        
-        inputToggle.onClick.AddListener(ToggleInput);
-        stopButton.onClick.AddListener(StopConnection);
+
+        if (plc.IsConnected)
+        {
+            Debug.Log("Conexão com PLC estabelecida");
+        }
+        else
+        {
+            Debug.LogError("Não foi possível estabelecer conexão com PLC");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-      //  try
-      // {
         //DBX e uma boleana
         //DBW e para real
-            bool Bool2 = (bool)plc.Read("DB1.DBX0.1");
-            bobina.text = Bool2.ToString();
 
-            if (plc.IsConnected)
-            {
-                plc.Write("DB1.DBX0.0", estado);
-                bool Bool1 = (bool)plc.Read("DB1.DBX0.0");
-                contato.text = Bool1.ToString();
-                estado = Bool1;
-            }
-            //o cath do PLC exception esta dando problema
-     //   }
-        // catch (PLCException e)
-        // {
-        //     Debug.LogError(e.Message);
-        // }
+        if (plc.IsConnected)
+        {
+            bool outputValue = (bool)plc.Read("DB1.DBX0.1");
+
+            // string address = "DB1.DBX0.0";
+
+            // // Escreve o valor booleano na variável especificada
+            // plc.Write(address, value);
+        }
+
+        //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
     }
-
+    
     public void ToggleInput()
     {
         estado = !estado; // inverte o estado entre true e false.
