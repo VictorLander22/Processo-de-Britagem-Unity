@@ -23,6 +23,8 @@ public class Com : MonoBehaviour
 
     private bool estado;
 
+    public Image statusConexao;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,6 @@ public class Com : MonoBehaviour
         // SubnetMask = 255.255.255.0
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         plcConnect();
-     
     }
 
     // Update is called once per frame
@@ -48,36 +49,51 @@ public class Com : MonoBehaviour
             // // Escreve o valor booleano na variável especificada
             // plc.Write(address, value);
         }
+        else
+        {
+            statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-
+            Color newColor = new Color(255f, 0f, 0f, 1f);
+            statusConexao.color = newColor;
+        }
 
         //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
     }
-    
+
     public void plcConnect()
     {
-        Debug.Log("1");
+        Debug.Log("Tentando Reconectar ao PLC...");
 
-     try
-    {
-        plc.Open();
+        statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-        if (plc.IsConnected)
+        try
         {
-            Debug.Log("Conexão com PLC estabelecida");
+            plc.Open();
+
+            if (plc.IsConnected)
+            {
+                Debug.Log("Conexão com PLC estabelecida");
+
+                Color newColor = new Color(0f, 255f, 0f, 1f);
+                statusConexao.color = newColor;
+            }
+            else
+            {
+                Debug.LogError("Não foi possível estabelecer conexão com PLC");
+
+                Color newColor = new Color(255f, 0f, 0f, 1f);
+                statusConexao.color = newColor;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Debug.LogError("Não foi possível estabelecer conexão com PLC");
+            Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+
+            Color newColor = new Color(255f, 0f, 0f, 1f);
+            statusConexao.color = newColor;
         }
-
-    }
-    catch (Exception ex)
-    {
-    Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
     }
 
-    }
     public void ToggleInput()
     {
         estado = !estado; // inverte o estado entre true e false.
