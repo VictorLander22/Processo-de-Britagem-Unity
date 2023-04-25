@@ -11,9 +11,6 @@ public class MenuPrincipalManager : MonoBehaviour
     private AudioManager aud;
 
     [SerializeField]
-    private string nomeCena;
-
-    [SerializeField]
     private GameObject painelMenuInicial;
 
     [SerializeField]
@@ -25,6 +22,9 @@ public class MenuPrincipalManager : MonoBehaviour
     [SerializeField]
     private Slider sliderVolum;
 
+    [SerializeField]
+    private CameraController controle;
+
     private void Start()
     {
         // Procura pelo audio preservado entre as cenas
@@ -35,7 +35,7 @@ public class MenuPrincipalManager : MonoBehaviour
         }
     }
 
-    public void abrir() // metodo do botao Abrir do menu
+    public void abrir(string nomeCena) // metodo do botao Abrir do menu
     {
         SceneManager.LoadScene(nomeCena);
     }
@@ -102,5 +102,15 @@ public class MenuPrincipalManager : MonoBehaviour
                 s.source.volume = x;
             }
         }
+    }
+
+    /**
+     * Codigo para mudar a sensibilidade do controle do oculus quest dentro da execucao da build.
+     * O valor de x e o q sai do slider e passa direto para os objetos.
+     */
+    public void slideSensibilidade(float x)
+    {
+        controle.moveSpeed = x;
+        controle.rotationSpeed = x;
     }
 }

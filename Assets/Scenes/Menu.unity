@@ -1787,7 +1787,19 @@ MonoBehaviour:
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1578012379}
+        m_TargetAssemblyTypeName: MenuPrincipalManager, Assembly-CSharp
+        m_MethodName: slideSensibilidade
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1019082438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,13 +1955,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1578012379}
         m_TargetAssemblyTypeName: MenuPrincipalManager, Assembly-CSharp
         m_MethodName: abrir
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Cena1
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!114 &1098390898
@@ -2997,11 +3009,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aud: {fileID: 221739093}
-  nomeCena: Cena1
   painelMenuInicial: {fileID: 1286191173}
   painelOpcoes: {fileID: 373892489}
   sliderMusic: {fileID: 1516091725}
   sliderVolum: {fileID: 1192473906}
+  controle: {fileID: 0}
 --- !u!4 &1578012380
 Transform:
   m_ObjectHideFlags: 0
