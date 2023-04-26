@@ -110,7 +110,7 @@ public class MenuPrincipalManager : MonoBehaviour
      */
     public void slideSensibilidade(float x)
     {
-        controle.moveSpeed = x;
-        controle.rotationSpeed = x;
+        // controle.moveSpeed = x;
+        // controle.rotationSpeed = x;
     }
 }

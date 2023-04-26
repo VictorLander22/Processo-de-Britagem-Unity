@@ -5,6 +5,7 @@ using S7.Net;
 using S7.Net.Types;
 using System;
 using UnityEngine.UI;
+using System.Threading;
 
 // comunica com as DBs
 
@@ -25,12 +26,13 @@ public class Com : MonoBehaviour
 
     public Image statusConexao;
 
+    private Thread plcThread;
+
     // Start is called before the first frame update
     void Start()
     {
         // Ip adrress :  192.168.0.1
         // SubnetMask = 255.255.255.0
-        plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         plcConnect();
     }
 
@@ -53,45 +55,43 @@ public class Com : MonoBehaviour
         {
             statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-            Color newColor = new Color(255f, 0f, 0f, 1f);
-            statusConexao.color = newColor;
+            SetConnectionStatusColor(Color.red);
         }
 
         //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
     }
 
+    /**
+    *Conexao executada em thread separada pra evitar que o programa fique travado durante o processo.
+    */
     public void plcConnect()
     {
-        Debug.Log("Tentando Reconectar ao PLC...");
-
-        statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
-
-        try
+        Debug.LogWarning("Tentando conectar ao PLC...");
+        plcThread = new Thread(() =>
         {
-            plc.Open();
-
-            if (plc.IsConnected)
+            try
             {
-                Debug.Log("Conexão com PLC estabelecida");
-
-                Color newColor = new Color(0f, 255f, 0f, 1f);
-                statusConexao.color = newColor;
+                using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
+                {
+                    plc.Open();
+                    if (plc.IsConnected)
+                    {
+                        Debug.Log("Conexão com PLC estabelecida");
+                        SetConnectionStatusColor(Color.green);
+                    }
+                    else
+                    {
+                        throw new Exception("Não foi possível estabelecer conexão com PLC");
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.LogError("Não foi possível estabelecer conexão com PLC");
-
-                Color newColor = new Color(255f, 0f, 0f, 1f);
-                statusConexao.color = newColor;
+                Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+                SetConnectionStatusColor(Color.red);
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
-
-            Color newColor = new Color(255f, 0f, 0f, 1f);
-            statusConexao.color = newColor;
-        }
+        });
+        plcThread.Start();
     }
 
     public void ToggleInput()
@@ -101,11 +101,23 @@ public class Com : MonoBehaviour
 
     public void StopConnection()
     {
-        plc.Close();
+        if (plc != null && plc.IsConnected)
+        {
+            plc.Close();
+        }
     }
 
     private void OnDestroy()
     {
-        plc.Close();
+        if (plc != null && plc.IsConnected)
+        {
+            plc.Close();
+        }
+    }
+
+    // mudar a cor relativo aos status de conexao
+    private void SetConnectionStatusColor(Color color)
+    {
+        statusConexao.color = color;
     }
 }
