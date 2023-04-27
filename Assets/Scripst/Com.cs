@@ -88,7 +88,7 @@ public class Com : MonoBehaviour
             catch (Exception ex)
             {
                 Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
-                SetConnectionStatusColor(Color.red);
+
             }
         });
         plcThread.Start();

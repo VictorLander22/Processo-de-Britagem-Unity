@@ -27,12 +27,31 @@ public class MenuPrincipalManager : MonoBehaviour
 
     private void Start()
     {
-        // Procura pelo audio preservado entre as cenas
+        // Procura pelo objeto de audio preservado entre as cenas
         aud = FindObjectOfType<AudioManager>();
         if (aud == null)
         {
             Debug.LogError("Aud null");
         }
+
+        //Exclusivo para a quando for a BUILD. Nao funciona pro PLAYMODE(teste) do UNITY
+        // Recupera o valor do slider de música salvo na memoria, quando for reabrir a aplicacao do UNITY.
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            float savedMusicVolume = PlayerPrefs.GetFloat("musicVolume");
+            sliderMusic.value = savedMusicVolume;
+            slideMusica(savedMusicVolume);
+        }
+
+        // Recupera o valor do slider de volume salvo na memoria
+        if (PlayerPrefs.HasKey("soundVolume"))
+        {
+            float savedSoundVolume = PlayerPrefs.GetFloat("soundVolume");
+            sliderVolum.value = savedSoundVolume;
+            slideVolume(savedSoundVolume);
+        }
+
+        //Exclusivo para a quando for a BUILD. Nao funciona pro PLAYMODE(teste) do UNITY
     }
 
     public void abrir(string nomeCena) // metodo do botao Abrir do menu
@@ -54,22 +73,6 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void fecharOpcoes()
     {
-        aud.sounds[0].source.volume = aud.sounds[0].volume;
-        foreach (Sound s in aud.sounds)
-        {
-            if (s == null || s.source == null)
-                continue;
-
-            // Armazena o volume atual do som
-            float currentVolume = s.source.volume;
-
-            // Define o volume do som como seu valor original
-            s.source.volume = s.volume;
-
-            // Define o volume do som como seu volume atual (para restaurar o valor original se o volume tiver sido alterado)
-            s.source.volume = currentVolume;
-        }
-
         painelOpcoes.SetActive(false);
         painelMenuInicial.SetActive(true);
     }
@@ -82,8 +85,15 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void slideMusica(float x)
     {
-        if (aud.sounds != null && aud.sounds.Length > 0)
+       if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
+        {
             aud.sounds[0].volume = x;
+            aud.sounds[0].source.volume = x;
+
+            //So funciona em caso de ser a BUILD
+            PlayerPrefs.SetFloat("musicVolume", x);
+            PlayerPrefs.Save();
+        }
     }
 
     /**
@@ -93,14 +103,18 @@ public class MenuPrincipalManager : MonoBehaviour
    */
     public void slideVolume(float x)
     {
-        if (aud.sounds != null && aud.sounds.Length > 0)
+       if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
         {
             foreach (Sound s in aud.sounds)
             {
                 if (s == null || s.source == null || s == aud.sounds[0])
                     continue;
                 s.source.volume = x;
+                s.volume=x;
             }
+            //So funciona em caso de ser a BUILD
+            PlayerPrefs.SetFloat("soundVolume", x);
+            PlayerPrefs.Save();
         }
     }
 
