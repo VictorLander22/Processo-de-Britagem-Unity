@@ -55,15 +55,14 @@ public class Com : MonoBehaviour
       
        
         ///bool valorEntrada = (bool)plc.Read(DataType.DataBlock, 1, 0, VarType.Byte, 1, 0);
-        byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
-        Debug.LogWarning("Saida: "+ a[0].ToString());
+        //byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
+        //Debug.LogWarning("Saida: "+ a[0].ToString());
+        byte[] a = new byte[];
+        plc.WriteBytes(DataType.Output, 0, 0, 1);
         byte[] b = plc.ReadBytes(DataType.Input, 0, 0, 1);
         Debug.LogWarning("Entrada 0: "+ b[0].ToString());
 
         
-        
-           
-      
 
         //plc.Close(); // fecha a conexão com o PLC
            // Debug.LogWarning(plc.Read(DataType.Input, 0, 1, VarType.Bit, 1));
