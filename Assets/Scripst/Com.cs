@@ -33,7 +33,10 @@ public class Com : MonoBehaviour
     {
         // Ip adrress :  192.168.0.1
         // SubnetMask = 255.255.255.0
-        plcConnect();
+        plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
+         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
+        plcConnect(plc);
+
     }
 
     // Update is called once per frame
@@ -41,11 +44,31 @@ public class Com : MonoBehaviour
     {
         //DBX e uma boleana
         //DBW e para real
-
+       // Debug.Log("plc:"+plc.IsConnected);
         if (plc.IsConnected)
         {
-            //bool outputValue = (bool)plc.Read("DB1.DBX0.1");
+            Debug.LogWarning("PLC conectado");
+            
+          //  bool outputValue = (bool)plc.Read("DB0.DBX0.0");
+           // Debug.LogWarning(outputValue);
+            // Verifica se a variável existe no PLC
+      
+       
+        ///bool valorEntrada = (bool)plc.Read(DataType.DataBlock, 1, 0, VarType.Byte, 1, 0);
+        byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
+        Debug.LogWarning("Saida: "+ a[0].ToString());
+        byte[] b = plc.ReadBytes(DataType.Input, 0, 0, 1);
+        Debug.LogWarning("Entrada 0: "+ b[0].ToString());
 
+        
+        
+           
+      
+
+        //plc.Close(); // fecha a conexão com o PLC
+           // Debug.LogWarning(plc.Read(DataType.Input, 0, 1, VarType.Bit, 1));
+            //if(outputValue)
+            //Debug.Log("plc: True");
             // string address = "DB1.DBX0.0";
 
             // // Escreve o valor booleano na variável especificada
@@ -53,9 +76,8 @@ public class Com : MonoBehaviour
         }
         else
         {
-            statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
-
-            SetConnectionStatusColor(Color.red);
+           
+           // SetConnectionStatusColor(Color.red);
         }
 
         //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
@@ -64,35 +86,27 @@ public class Com : MonoBehaviour
     /**
     *Conexao executada em thread separada pra evitar que o programa fique travado durante o processo.
     */
-    public void plcConnect()
+public void plcConnect(Plc plc)
+{
+    Debug.LogWarning("Tentando conectar ao PLC...");
+    plcThread = new Thread(() =>
     {
-        Debug.LogWarning("Tentando conectar ao PLC...");
-        plcThread = new Thread(() =>
+        try
         {
-            try
+            // using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
             {
-                using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
-                {
-                    plc.Open();
-                    if (plc.IsConnected)
-                    {
-                        Debug.Log("Conexão com PLC estabelecida");
-                        SetConnectionStatusColor(Color.green);
-                    }
-                    else
-                    {
-                        throw new Exception("Não foi possível estabelecer conexão com PLC");
-                    }
-                }
+                plc.Open();
+               
             }
-            catch (Exception ex)
-            {
-                Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+        }
+    });
+    plcThread.Start();
+}
 
-            }
-        });
-        plcThread.Start();
-    }
 
     public void ToggleInput()
     {
