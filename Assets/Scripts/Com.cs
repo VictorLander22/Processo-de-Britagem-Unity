@@ -20,7 +20,8 @@ public class Com : MonoBehaviour
     [SerializeField]
     private short slot = 1;
 
-    Plc plc;
+    public Plc plc;
+    private bool isConnecting = false;
 
     public Image statusConexao;
 
@@ -47,41 +48,47 @@ public class Com : MonoBehaviour
         // SubnetMask = 255.255.255.0
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
-        plcConnect(plc);
+
+        //  plcConnect(plc);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (plc.IsConnected)
+        //  bool outputValue = (bool)plc.Read("DB0.DBX0.0");
+        // Debug.LogWarning(outputValue);
+        // Verifica se a variável existe no PLC
+
+        //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
+        ///bool valorEntrada = (bool)plc.Read(DataType.DataBlock, 1, 0, VarType.Byte, 1, 0);
+        //byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
+        //   byte myByte = plc.ReadBytes(DataType.Output, 0, 0, 1);
+        //Debug.LogWarning("Saida: "+ a[0].ToString());
+        //     byte[] a = { 15 };
+        //     plc.WriteBytes(DataType.Output, 0, 0, a);
+        //     byte[] b = plc.ReadBytes(DataType.Input, 0, 0, 1);
+        //     Debug.LogWarning("Entrada 0: " + b[0].ToString());
+
+        //plc.Close(); // fecha a conexão com o PLC
+        // Debug.LogWarning(plc.Read(DataType.Input, 0, 1, VarType.Bit, 1));
+
+        //  if (plc.IsConnected)
+        if (true)
         {
-            Debug.LogWarning("PLC conectado");
+            // quando for testar com o plc substituir o true pelo (plc.IsConnected)
+            SetConnectionStatusColor(Color.green);
 
-            //  bool outputValue = (bool)plc.Read("DB0.DBX0.0");
-            // Debug.LogWarning(outputValue);
-            // Verifica se a variável existe no PLC
-
-            //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
-            ///bool valorEntrada = (bool)plc.Read(DataType.DataBlock, 1, 0, VarType.Byte, 1, 0);
-            //byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
-            //   byte myByte = plc.ReadBytes(DataType.Output, 0, 0, 1);
-            //Debug.LogWarning("Saida: "+ a[0].ToString());
-            byte[] a = { 15 };
-            plc.WriteBytes(DataType.Output, 0, 0, a);
-            byte[] b = plc.ReadBytes(DataType.Input, 0, 0, 1);
-            Debug.LogWarning("Entrada 0: " + b[0].ToString());
-
-            //plc.Close(); // fecha a conexão com o PLC
-            // Debug.LogWarning(plc.Read(DataType.Input, 0, 1, VarType.Bit, 1));
+            if (Time.time - ultimaExecucao > intervaloDeTempo)
+            // colocar aqui o código que só deve ser executado a cada intervaloDeTempo segundos
+            {
+                Debug.Log("Passe IF");
+                plcAction();
+                ultimaExecucao = Time.time;
+            }
         }
-        else { }
-
-        if (true && Time.time - ultimaExecucao > intervaloDeTempo)
-        // colocar aqui o código que só deve ser executado a cada intervaloDeTempo segundos
+        else
         {
-            Debug.Log("Passe IF");
-            plcAction();
-            ultimaExecucao = Time.time;
+            SetConnectionStatusColor(Color.red);
         }
     }
 
@@ -90,6 +97,16 @@ public class Com : MonoBehaviour
     */
     public void plcConnect(Plc plc)
     {
+        // se a conexao existir ele a fecha. Evita multiplas conexoes simultaneas.
+        StopConnection();
+
+        if (isConnecting)
+        {
+            Debug.LogWarning("Tentaiva de Conexão já em andamento.");
+            return;
+        }
+        isConnecting = true;
+
         Debug.LogWarning("Tentando conectar ao PLC...");
         plcThread = new Thread(() =>
         {
@@ -104,8 +121,18 @@ public class Com : MonoBehaviour
             {
                 Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
             }
+            finally
+            {
+                isConnecting = false;
+            }
         });
         plcThread.Start();
+    }
+
+    // Metodo para o botao de reconexao, agora que temos que passar o plc como parametro. N encontrei maneira mais simples de se fazer
+    public void clickplcReConnect()
+    {
+        plcConnect(plc);
     }
 
     public void StopConnection()
@@ -166,6 +193,6 @@ public class Com : MonoBehaviour
         }
         // plc.WriteBytes(DataType.Output, 0, 0, myByte);
 
-        Debug.Log("Resultado: " + myByte); 
+        Debug.Log("Resultado: " + myByte);
     }
 }
