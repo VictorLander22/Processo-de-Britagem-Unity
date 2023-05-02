@@ -6,6 +6,8 @@ public class BotaoBritadorPrimario : MonoBehaviour
 {
     public BritadorPrimario Britador;
 
+    public Com com;
+
     // Start is called before the first frame update
     void Start() { }
 
@@ -15,5 +17,8 @@ public class BotaoBritadorPrimario : MonoBehaviour
     private void OnMouseDown()
     {
         Britador.ligar();
+
+        com.vetorDeBits[0] = 1;
+        com.plcWrite();
     }
 }

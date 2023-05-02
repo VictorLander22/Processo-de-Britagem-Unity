@@ -24,11 +24,17 @@ public class BritadorPrimario : MonoBehaviour
     /**
      *Nesse metodo que vao estar todas as coisas chamadas quando o britador for acionado.
      **/
-  public void ligar()
+    public void ligar()
     {
         Debug.LogWarning("Britador Ligado");
 
         aud.Play("Britador");
-        //funcao que vai chamar a animacao
+
+        // aud.Play("Esteira");
+    }
+
+    public void parar()
+    {
+        aud.Stop("Britador");
     }
 }

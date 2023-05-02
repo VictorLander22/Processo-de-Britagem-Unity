@@ -52,6 +52,19 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Som " + name + "Nao encontrado");
             return;
         }
+        if (s.source.isPlaying) // verifica se o som ja esta em reproducao e caso sim nao o inicia novamente
+            return;
         s.source.Play(); // vai dar erro se o name estiver incorreto
+    }
+
+    public void Stop(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null) // verifica se consegue achar um arquivo com o nome de sim correto
+        {
+            Debug.LogWarning("Som " + name + "Nao encontrado");
+            return;
+        }
+        s.source.Stop();
     }
 }

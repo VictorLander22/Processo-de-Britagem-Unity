@@ -1314,6 +1314,10 @@ MonoBehaviour:
   rack: 0
   slot: 1
   statusConexao: {fileID: 123729145}
+  intervaloDeTempo: 3
+  myByte: 0
+  vetorDeBits: 0000000000000000
+  britador1: {fileID: 1479437772}
 --- !u!4 &892416761
 Transform:
   m_ObjectHideFlags: 0
@@ -1970,6 +1974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Britador: {fileID: 1479437772}
+  com: {fileID: 892416760}
 --- !u!65 &1062742774
 BoxCollider:
   m_ObjectHideFlags: 0
