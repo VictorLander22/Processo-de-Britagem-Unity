@@ -65,7 +65,7 @@ public class Com : MonoBehaviour
             // colocar aqui o código que só deve ser executado a cada intervaloDeTempo segundos
             {
                 Debug.Log("Passe IF");
-                plcAction();
+                plcRead();
                 ultimaExecucao = Time.time;
             }
         }
@@ -140,7 +140,7 @@ public class Com : MonoBehaviour
         statusConexao.color = color;
     }
 
-    public void plcAction()
+    public void plcRead()
     {
         // plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
         Debug.LogWarning("O valor do plcByte e : " + plcByte);

@@ -83,15 +83,15 @@ public class MenuPrincipalManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void slideMusica(float x)
+    public void slideMusica(float slideValue)
     {
        if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
         {
-            aud.sounds[0].volume = x;
-            aud.sounds[0].source.volume = x;
+            aud.sounds[0].volume = slideValue;
+            aud.sounds[0].source.volume = slideValue;
 
             //So funciona em caso de ser a BUILD
-            PlayerPrefs.SetFloat("musicVolume", x);
+            PlayerPrefs.SetFloat("musicVolume", slideValue);
             PlayerPrefs.Save();
         }
     }
@@ -101,7 +101,7 @@ public class MenuPrincipalManager : MonoBehaviour
    * Mudar o volume dos equipamentos da planta. O vetor comeca em 1 e termina no numero maximo de sons diferentes dos equipamentos.
    * o 0 e do tema musical de fundo controlado pelo slideMusica.
    */
-    public void slideVolume(float x)
+    public void slideVolume(float slideValue)
     {
        if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
         {
@@ -109,11 +109,11 @@ public class MenuPrincipalManager : MonoBehaviour
             {
                 if (s == null || s.source == null || s == aud.sounds[0])
                     continue;
-                s.source.volume = x;
-                s.volume=x;
+                s.source.volume = slideValue;
+                s.volume=slideValue;
             }
             //So funciona em caso de ser a BUILD
-            PlayerPrefs.SetFloat("soundVolume", x);
+            PlayerPrefs.SetFloat("soundVolume", slideValue);
             PlayerPrefs.Save();
         }
     }
