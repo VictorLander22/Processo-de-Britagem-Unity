@@ -32,7 +32,7 @@ public class Com : MonoBehaviour
     private float ultimaExecucao = 0.0f;
 
     // intervalo de tempo de leitura do plc
-    public byte myByte = 0;
+    public byte plcByte; // byte vindo do plc
     public byte[] vetorDeBits = new byte[8];
 
     // Objetos da planta
@@ -49,33 +49,16 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-        //  plcConnect(plc);
+        plcConnect(plc);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //  bool outputValue = (bool)plc.Read("DB0.DBX0.0");
-        // Debug.LogWarning(outputValue);
-        // Verifica se a variável existe no PLC
-
-        //   outputValue = plc.ReadBit(DataType.DataBlock, dbNumber, byteIndex, bitIndex);
-        ///bool valorEntrada = (bool)plc.Read(DataType.DataBlock, 1, 0, VarType.Byte, 1, 0);
-        //byte[] a = plc.ReadBytes(DataType.Output, 0, 0, 1);
-        //   byte myByte = plc.ReadBytes(DataType.Output, 0, 0, 1);
-        //Debug.LogWarning("Saida: "+ a[0].ToString());
-        //     byte[] a = { 15 };
-        //     plc.WriteBytes(DataType.Output, 0, 0, a);
-        //     byte[] b = plc.ReadBytes(DataType.Input, 0, 0, 1);
-        //     Debug.LogWarning("Entrada 0: " + b[0].ToString());
-
-        //plc.Close(); // fecha a conexão com o PLC
-        // Debug.LogWarning(plc.Read(DataType.Input, 0, 1, VarType.Bit, 1));
-
-        //  if (plc.IsConnected)
+        //   if (plc.IsConnected)
         if (true)
         {
-            // quando for testar com o plc substituir o true pelo (plc.IsConnected)
+            Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
 
             if (Time.time - ultimaExecucao > intervaloDeTempo)
@@ -159,13 +142,12 @@ public class Com : MonoBehaviour
 
     public void plcAction()
     {
-        //   myByte = plc.ReadBytes(DataType.Output, 0, 0, 1);
-        Debug.Log(" IF O valor do byte vindo do plc e :" + myByte);
-
+        // plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+        Debug.LogWarning("O valor do plcByte e : " + plcByte);
         for (int i = 7; i >= 0; i--)
         {
             // obtem o i-ésimo bit do byte
-            vetorDeBits[i] = (byte)((myByte >> i) & 1);
+            vetorDeBits[i] = (byte)((plcByte >> i) & 1);
 
             // imprime o bit na tela (pode ser armazenado em um array ou variável, dependendo do seu uso)
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
@@ -178,7 +160,88 @@ public class Com : MonoBehaviour
                 britador1.ligar();
             }
             else
+            {
                 britador1.parar();
+            }
+        }
+
+        if (true)
+        {
+            if (vetorDeBits[1] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 2");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 2");
+            }
+        }
+        if (true)
+        {
+            if (vetorDeBits[2] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 3");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 3");
+            }
+        }
+        if (true)
+        {
+            if (vetorDeBits[3] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 4");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 4");
+            }
+        }
+
+        if (true)
+        {
+            if (vetorDeBits[4] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 5");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 5");
+            }
+        }
+        if (true)
+        {
+            if (vetorDeBits[5] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 6");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 6");
+            }
+        }
+        if (true)
+        {
+            if (vetorDeBits[6] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 7");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 7");
+            }
+        }
+        if (true)
+        {
+            if (vetorDeBits[7] == 1) // Primeira Britadeira
+            {
+                Debug.Log("Ligar Britadeira 8");
+            }
+            else
+            {
+                Debug.Log("Desligar Britadeira 8");
+            }
         }
     }
 
@@ -188,11 +251,11 @@ public class Com : MonoBehaviour
         {
             if (vetorDeBits[i] == 1)
             {
-                myByte |= (byte)(1 << (i));
+                plcByte |= (byte)(1 << (i));
             }
         }
-        // plc.WriteBytes(DataType.Output, 0, 0, myByte);
+        // plc.WriteBytes(DataType.Output, 0, 0, plcByte);
 
-        Debug.Log("Resultado: " + myByte);
+        Debug.Log("Resultado: " + plcByte);
     }
 }
