@@ -49,7 +49,7 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-        plcConnect(plc);
+       // plcConnect(plc);
     }
 
     // Update is called once per frame
@@ -142,7 +142,7 @@ public class Com : MonoBehaviour
 
     public void plcRead()
     {
-        // plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+      //  plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
         Debug.LogWarning("O valor do plcByte e : " + plcByte);
         for (int i = 7; i >= 0; i--)
         {
@@ -254,7 +254,7 @@ public class Com : MonoBehaviour
                 plcByte |= (byte)(1 << (i));
             }
         }
-        // plc.WriteBytes(DataType.Output, 0, 0, plcByte);
+        //  plc.WriteBytes(DataType.Output, 0, 0, plcByte);
 
         Debug.Log("Resultado: " + plcByte);
     }

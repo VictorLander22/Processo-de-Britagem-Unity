@@ -37,4 +37,14 @@ public class BritadorPrimario : MonoBehaviour
     {
         aud.Stop("Britador");
     }
+
+    private IEnumerator OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Brita1"))
+        {
+            Debug.LogWarning("Brita colidiu com o britador1");
+            yield return new WaitForSeconds(0.5f); 
+            Destroy(collision.gameObject);
+        }
+    }
 }

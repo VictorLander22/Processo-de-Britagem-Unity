@@ -6,14 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class Cena1Manager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start() { }
+    [SerializeField]
+    private float Brita1X = -1.5f;
 
-    // Update is called once per frame
-    void Update() { }
+    [SerializeField]
+    private float Brita1Y = 8f;
 
+    [SerializeField]
+    private float Brita1Z = 18.66965f;
+    public GameObject brita1;
+
+    [SerializeField]
     public void MenuButton(string nomeCena)
     {
         SceneManager.LoadScene(nomeCena);
+    }
+
+    public IEnumerator SpawnBrita1()
+    {
+        Instantiate(brita1, new Vector3(Brita1X, Brita1Y, Brita1Z), Quaternion.identity);
+
+        yield return null;
     }
 }
