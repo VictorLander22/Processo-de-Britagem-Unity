@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Play("Zelda");
+       // Play("Zelda");
     }
 
     /// Awake is called when the script instance is being loaded.

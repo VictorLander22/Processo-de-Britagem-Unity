@@ -28,7 +28,7 @@ public class Com : MonoBehaviour
     private Thread plcThread;
 
     // intervalo de tempo de leitura do plc
-    public float intervaloDeTempo = 3.0f; // tempo da leitura de dados do plc
+    public float intervaloDeTempo = 1.0f; // tempo da leitura de dados do plc
     private float ultimaExecucao = 0.0f;
 
     // intervalo de tempo de leitura do plc

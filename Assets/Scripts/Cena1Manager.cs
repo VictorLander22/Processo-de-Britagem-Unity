@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 public class Cena1Manager : MonoBehaviour
 {
     [SerializeField]
-    private float Brita1X = -1.5f;
+    private float Brita1X = 0f;
 
     [SerializeField]
-    private float Brita1Y = 8f;
+    private float Brita1Y = 0f;
 
     [SerializeField]
-    private float Brita1Z = 18.66965f;
+    private float Brita1Z = 0.66965f;
     public GameObject brita1;
 
     [SerializeField]
