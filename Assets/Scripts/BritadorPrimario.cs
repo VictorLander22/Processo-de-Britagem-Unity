@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BritadorPrimario : MonoBehaviour
 {
-    private GameObject britador; 
+    private GameObject britador;
+
+    private bool state = false; // armazena o estado atual do britador. Ligado = True, Desl = False
 
     [SerializeField]
     private AudioManager aud;
@@ -13,7 +15,7 @@ public class BritadorPrimario : MonoBehaviour
     void Start()
     {
         britador = GameObject.Find("Primeira-Britadeira");
-        
+
         // Procura pelo audio preservado entre as cenas
         aud = FindObjectOfType<AudioManager>();
         if (aud == null)
@@ -31,15 +33,16 @@ public class BritadorPrimario : MonoBehaviour
     public void ligar()
     {
         Debug.LogWarning("Britador Ligado");
-        startAnimations();
-        aud.Play("Britador");
 
-        // aud.Play("Esteira");
+        startAnimations();
+        state = true;
+        aud.Play("Britador");
     }
 
     public void parar()
     {
         stopAnimations();
+        state = false;
         aud.Stop("Britador");
     }
 
@@ -48,27 +51,34 @@ public class BritadorPrimario : MonoBehaviour
         if (collision.gameObject.CompareTag("Brita1"))
         {
             Debug.LogWarning("Brita colidiu com o britador1");
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.5f);
             Destroy(collision.gameObject);
         }
     }
 
-    private void startAnimations() {
+    private void startAnimations()
+    {
         Animator[] childAnimators = britador.GetComponentsInChildren<Animator>();
-        foreach(Animator anim in childAnimators){
+        foreach (Animator anim in childAnimators)
+        {
             anim.enabled = true;
             AnimationClip[] animationClips = anim.runtimeAnimatorController.animationClips;
-            foreach(AnimationClip animClip in animationClips)
+            foreach (AnimationClip animClip in animationClips)
             {
                 anim.Play(animClip.name);
             }
         }
     }
 
-    private void stopAnimations() {
+    private void stopAnimations()
+    {
         Animator[] childAnimators = britador.GetComponentsInChildren<Animator>();
-        foreach(Animator anim in childAnimators){
-            anim.enabled = false;
+        foreach (Animator anim in childAnimators)
+        {
+            if (anim.enabled)
+            {
+                anim.enabled = false;
+            }
         }
     }
 }
