@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Cena1Manager : MonoBehaviour
 {
-    [SerializeField]
-    private float Brita1X = 0f;
-
-    [SerializeField]
-    private float Brita1Y = 0f;
-
-    [SerializeField]
-    private float Brita1Z = 0.66965f;
     public GameObject brita1;
+
+    [SerializeField]
+    private Vector3 brita1Position = new Vector3(4f, 12f, 10.5f);
+
+    public GameObject brita2;
+
+    [SerializeField]
+    private Vector3 brita2Position = new Vector3(4f, 12f, 10.5f);
 
     [SerializeField]
     public void MenuButton(string nomeCena)
@@ -24,8 +24,17 @@ public class Cena1Manager : MonoBehaviour
 
     public IEnumerator SpawnBrita1()
     {
-        Instantiate(brita1, new Vector3(Brita1X, Brita1Y, Brita1Z), Quaternion.identity);
+        Instantiate(brita1, brita1Position, Quaternion.identity);
 
         yield return null;
+    }
+
+    public IEnumerator SpawnBrita2()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(brita2, brita2Position, Quaternion.identity);
+            yield return null;
+        }
     }
 }
