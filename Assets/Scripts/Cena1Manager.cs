@@ -34,7 +34,26 @@ public class Cena1Manager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Instantiate(brita2, brita2Position, Quaternion.identity);
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    // funcao para destruir todos os objetos com uma tag em especifica.
+    public void DestroyObjectsWithTags(params string[] tags)
+    {
+        foreach (string tag in tags)
+        {
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
+
+            foreach (GameObject obj in objectsWithTag)
+            {
+                Destroy(obj);
+            }
+        }
+    }
+
+    public void DestroyAllBritas()
+    {
+        DestroyObjectsWithTags("Brita1", "Brita2");
     }
 }
