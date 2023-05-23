@@ -11,6 +11,8 @@ using System.Threading;
 
 public class Com : MonoBehaviour
 {
+    public Plc plc;
+
     [SerializeField]
     private string ipAddress = "192.168.0.1";
 
@@ -20,24 +22,26 @@ public class Com : MonoBehaviour
     [SerializeField]
     private short slot = 1;
 
-    public Plc plc;
-    private bool isConnecting = false;
-
     public Image statusConexao;
 
     private Thread plcThread;
+
+    private bool isConnecting = false;
+
+    public byte plcByte; // byte vindo do plc
+    public byte[] vetorDeBits = new byte[8];
 
     // intervalo de tempo de leitura do plc
     public float intervaloDeTempo = 1.0f; // tempo da leitura de dados do plc
     private float ultimaExecucao = 0.0f;
 
     // intervalo de tempo de leitura do plc
-    public byte plcByte; // byte vindo do plc
-    public byte[] vetorDeBits = new byte[8];
 
     // Objetos da planta
 
     public BritadorPrimario britador1;
+    public Esteira esteira1;
+    public Peneira peneira1;
 
     // Objetos da planta
 
@@ -49,7 +53,7 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-       // plcConnect(plc);
+        // plcConnect(plc);
     }
 
     // Update is called once per frame
@@ -142,9 +146,11 @@ public class Com : MonoBehaviour
 
     public void plcRead()
     {
-      //  plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+        //  plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
         Debug.LogWarning("O valor do plcByte e : " + plcByte);
-        for (int i = 7; i >= 0; i--)
+
+        // sao 3 equipamentos no trabalho, 3 valores vindos do plc e interagindo com a simulacao po isso 0,1,2.
+        for (int i = 0; i <= 2; i++)
         {
             // obtem o i-ésimo bit do byte
             vetorDeBits[i] = (byte)((plcByte >> i) & 1);
@@ -155,7 +161,7 @@ public class Com : MonoBehaviour
 
         if (britador1 != null)
         {
-            if (vetorDeBits[0] == 1) // Primeira Britadeira
+            if (vetorDeBits[0] == 1) // Britadeira
             {
                 britador1.ligar();
             }
@@ -165,82 +171,26 @@ public class Com : MonoBehaviour
             }
         }
 
-        if (true)
+        if (esteira1 != null)
         {
-            if (vetorDeBits[1] == 1) // Primeira Britadeira
+            if (vetorDeBits[1] == 1) // Esteira
             {
-                Debug.Log("Ligar Britadeira 2");
+                esteira1.ligar();
             }
             else
             {
-                Debug.Log("Desligar Britadeira 2");
+                esteira1.parar();
             }
         }
-        if (true)
+        if (peneira1 != null)
         {
-            if (vetorDeBits[2] == 1) // Primeira Britadeira
+            if (vetorDeBits[2] == 1) // Peneira
             {
-                Debug.Log("Ligar Britadeira 3");
+                peneira1.ligar();
             }
             else
             {
-                Debug.Log("Desligar Britadeira 3");
-            }
-        }
-        if (true)
-        {
-            if (vetorDeBits[3] == 1) // Primeira Britadeira
-            {
-                Debug.Log("Ligar Britadeira 4");
-            }
-            else
-            {
-                Debug.Log("Desligar Britadeira 4");
-            }
-        }
-
-        if (true)
-        {
-            if (vetorDeBits[4] == 1) // Primeira Britadeira
-            {
-                Debug.Log("Ligar Britadeira 5");
-            }
-            else
-            {
-                Debug.Log("Desligar Britadeira 5");
-            }
-        }
-        if (true)
-        {
-            if (vetorDeBits[5] == 1) // Primeira Britadeira
-            {
-                Debug.Log("Ligar Britadeira 6");
-            }
-            else
-            {
-                Debug.Log("Desligar Britadeira 6");
-            }
-        }
-        if (true)
-        {
-            if (vetorDeBits[6] == 1) // Primeira Britadeira
-            {
-                Debug.Log("Ligar Britadeira 7");
-            }
-            else
-            {
-                Debug.Log("Desligar Britadeira 7");
-            }
-        }
-        if (true)
-        {
-            if (vetorDeBits[7] == 1) // Primeira Britadeira
-            {
-                Debug.Log("Ligar Britadeira 8");
-            }
-            else
-            {
-                Debug.Log("Desligar Britadeira 8");
+                peneira1.parar();
             }
         }
     }

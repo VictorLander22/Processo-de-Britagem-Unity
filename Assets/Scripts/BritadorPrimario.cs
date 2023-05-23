@@ -14,7 +14,7 @@ public class BritadorPrimario : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        britador = GameObject.Find("Primeira-Britadeira");
+        britador = GameObject.Find("Britadeira");
 
         // Procura pelo audio preservado entre as cenas
         aud = FindObjectOfType<AudioManager>();
