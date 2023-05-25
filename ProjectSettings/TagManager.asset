@@ -7,6 +7,8 @@ TagManager:
   - Terreno
   - Brita1
   - Brita2
+  - Brita3
+  - Brita4
   layers:
   - Default
   - TransparentFX

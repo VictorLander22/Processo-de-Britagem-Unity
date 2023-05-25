@@ -12,7 +12,7 @@ public class BritadorPrimario : MonoBehaviour
     [SerializeField]
     private AudioManager aud;
 
-    private bool state = false; // armazena o estado atual do britador. Ligado = True, Desl = False
+    private bool ligado = false; // armazena o estado atual do britador. Ligado = True, Desl = False
 
     private GameObject britaColidida;
 
@@ -40,17 +40,17 @@ public class BritadorPrimario : MonoBehaviour
      **/
     public void ligar()
     {
-        Debug.LogWarning("Britador Ligado");
+        Debug.LogWarning("Britador: Ligado");
 
         startAnimations();
-        state = true;
+        ligado = true;
         aud.Play("Britador");
     }
 
     public void parar()
     {
         stopAnimations();
-        state = false;
+        ligado = false;
         aud.Stop("Britador");
     }
 
@@ -58,14 +58,14 @@ public class BritadorPrimario : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Brita1"))
         {
-            Debug.LogWarning("Brita colidiu com o britador1");
+            Debug.LogWarning("Britador:Brita colidiu");
             britaColidida = collision.gameObject;
         }
     }
 
     private void colisaoOcorrendo()
     {
-        if (britaColidida != null && state == true)
+        if (britaColidida != null && ligado == true)
         {
             Destroy(britaColidida);
             StartCoroutine(cena1.SpawnBrita2());
@@ -78,7 +78,7 @@ public class BritadorPrimario : MonoBehaviour
     //     {
     //         Debug.LogWarning("Brita esta em contato com hit box");
 
-    //         if (state == true)
+    //         if ( ligado == true)
     //         {
     //             yield return new WaitForSeconds(0.5f);
     //             Destroy(collision.gameObject);

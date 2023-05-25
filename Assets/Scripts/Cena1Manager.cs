@@ -16,20 +16,30 @@ public class Cena1Manager : MonoBehaviour
     [SerializeField]
     private Vector3 brita2Position = new Vector3(4f, 12f, 10.5f);
 
+    public GameObject brita3;
+
+    [SerializeField]
+    private Vector3 brita3Position = new Vector3(-0.73f, 1.53f, 3.223368f);
+
+    public GameObject brita4;
+
+    [SerializeField]
+    private Vector3 brita4Position = new Vector3(-0.73f, 1.53f, 3.223368f);
+
     [SerializeField]
     public void MenuButton(string nomeCena)
     {
         SceneManager.LoadScene(nomeCena);
     }
 
-    public IEnumerator SpawnBrita1()
+    public IEnumerator SpawnBrita1() // spawna a brita q cai no britador
     {
         Instantiate(brita1, brita1Position, Quaternion.identity);
 
         yield return null;
     }
 
-    public IEnumerator SpawnBrita2()
+    public IEnumerator SpawnBrita2() // spawna a brita q sai do britador e vai pra esteira
     {
         for (int i = 0; i < 3; i++)
         {
@@ -38,22 +48,24 @@ public class Cena1Manager : MonoBehaviour
         }
     }
 
-    // funcao para destruir todos os objetos com uma tag em especifica.
-    public void DestroyObjectsWithTags(params string[] tags)
+    public IEnumerator SpawnBrita3() // spawna as britas na saida primaria
     {
-        foreach (string tag in tags)
+        for (int i = 0; i < 3; i++)
         {
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
-
-            foreach (GameObject obj in objectsWithTag)
-            {
-                Destroy(obj);
-            }
+            Instantiate(brita3, brita3Position, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
-    public void DestroyAllBritas()
+    public IEnumerator SpawnBrita4() // spawna as britas na saida primaria
     {
-        DestroyObjectsWithTags("Brita1", "Brita2");
+        for (int i = 0; i < 12; i++)
+        {
+            Instantiate(brita4, brita4Position, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
+
+   
+
 }

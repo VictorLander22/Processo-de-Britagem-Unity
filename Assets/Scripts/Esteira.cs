@@ -6,15 +6,15 @@ public class Esteira : MonoBehaviour
 {
     private GameObject esteira;
 
-    private bool state = false;
+    private bool ligado = false;
 
-    Transform filho;
-
-    [SerializeField]
-    private List<Rigidbody> britasColididas = new List<Rigidbody>(); // Lista de britas que entraram en contato com a esteira.
+    public RoletaHitBox roleta;
 
     [SerializeField]
-    private float forcaEsteira = 1.0f;
+    private float velocidadeEsteiraX = 1.0f;
+
+    [SerializeField]
+    private float velocidadeEsteiraY = 1.0f;
 
     [SerializeField]
     private AudioManager aud;
@@ -30,28 +30,27 @@ public class Esteira : MonoBehaviour
         {
             Debug.LogError("Aud null");
         }
-
         addRoletaColider();
     }
 
     // Update is called once per frame
     void Update()
     {
-        AplicarForcaBrita();
+        AplicarVelocidadeBrita();
     }
 
     public void ligar()
     {
-        Debug.LogWarning("Esteira Ligada");
+        Debug.LogWarning("Esteira: Ligada");
         startAnimations();
-        state = true;
+        ligado = true;
         aud.Play("Esteira");
     }
 
     public void parar()
     {
         stopAnimations();
-        state = false;
+        ligado = false;
         aud.Stop("Esteira");
     }
 
@@ -83,58 +82,51 @@ public class Esteira : MonoBehaviour
 
     private void addRoletaColider()
     {
-        filho = transform.Find("Roleta");
+        Transform filho = transform.Find("Roleta");
 
         if (filho != null)
         {
-            // Obtém o MeshCollider do objeto filho encontrado
-            MeshCollider meshCollider = filho.GetComponent<MeshCollider>();
-
-            if (meshCollider != null)
-            {
-                // Faça algo com o MeshCollider
-                Debug.Log("MeshCollider encontrado no objeto filho ");
-            }
-            else
-            {
-                Debug.Log("Nenhum MeshCollider encontrado no objeto filho ");
-            }
+            roleta = filho.GetComponent<RoletaHitBox>();
         }
         else
         {
-            Debug.Log("Nenhum objeto filho com o nome  encontrado.");
+            Debug.Log("Esteira: Nenhum objeto filho com o nome  encontrado.");
         }
     }
 
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     // Verifica se o objeto colidiu com o objeto da esteira
-    //     if (collision.gameObject.CompareTag("Brita2"))
-    //     {
-    //         Debug.LogWarning("Brita2 colidiu com o hit box");
-
-    //         // Obtém o componente Rigidbody do objeto colidido
-    //         Rigidbody rigidbody = collision.gameObject.GetComponent<Rigidbody>();
-
-    //         // Verifica se o objeto possui um Rigidbody
-    //         if (rigidbody != null)
-    //         {
-    //             Debug.LogWarning("1");
-    //             // Adiciona o Rigidbody à lista de objetos colididos
-    //             britasColididas.Add(rigidbody);
-    //         }
-    //     }
-    // }
-
     // Mover brita
-    public void AplicarForcaBrita()
+    // o valor de velocidadeEsteira e multiplicado por negativo pois o sentido de locomocao e no sentido inverso do eixo X.
+    //De x 0 para x -1 e assim por diante
+    public void AplicarVelocidadeBrita()
     {
-        foreach (Rigidbody brita in britasColididas)
+        if (roleta == null)
+            return;
+
+        if (ligado == false)
+            return;
+
+        // foreach (Rigidbody brita in roleta.britasColididas)
+        // {
+        //     if (brita != null)
+        //     {
+        //         // Define a velocidade constante no eixo X positivo
+        //         Vector3 velocidade = new Vector3(-velocidadeEsteira, 0, 0);
+
+        //         // Move o objeto usando a velocidade constante
+        //         brita.MovePosition(brita.position + velocidade * Time.deltaTime);
+
+
+        //     }
+        // }
+
+        foreach (Rigidbody brita in roleta.britasColididas)
         {
             if (brita != null)
             {
-                // Aplica a força no objeto ao longo do eixo X positivo
-                brita.AddForce(Vector3.left * forcaEsteira);
+                // Define a velocidade constante no eixo X positivo
+                Vector3 velocidade = new Vector3(-velocidadeEsteiraX, velocidadeEsteiraY, 0);
+
+                brita.velocity = velocidade;
             }
         }
     }

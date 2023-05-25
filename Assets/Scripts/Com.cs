@@ -28,7 +28,7 @@ public class Com : MonoBehaviour
 
     private bool isConnecting = false;
 
-    public byte plcByte; // byte vindo do plc
+    public byte ComandoByte; // byte vindo do plc
     public byte[] vetorDeBits = new byte[8];
 
     // intervalo de tempo de leitura do plc
@@ -146,14 +146,14 @@ public class Com : MonoBehaviour
 
     public void plcRead()
     {
-        //  plcByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
-        Debug.LogWarning("O valor do plcByte e : " + plcByte);
+        //  ComandoByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+        Debug.LogWarning("O valor do ComandoByte e : " + ComandoByte);
 
         // sao 3 equipamentos no trabalho, 3 valores vindos do plc e interagindo com a simulacao po isso 0,1,2.
         for (int i = 0; i <= 2; i++)
         {
             // obtem o i-ésimo bit do byte
-            vetorDeBits[i] = (byte)((plcByte >> i) & 1);
+            vetorDeBits[i] = (byte)((ComandoByte >> i) & 1);
 
             // imprime o bit na tela (pode ser armazenado em um array ou variável, dependendo do seu uso)
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
@@ -201,11 +201,21 @@ public class Com : MonoBehaviour
         {
             if (vetorDeBits[i] == 1)
             {
-                plcByte |= (byte)(1 << (i));
+                ComandoByte |= (byte)(1 << (i));
             }
         }
-        //  plc.WriteBytes(DataType.Output, 0, 0, plcByte);
+        //  plc.WriteBytes(DataType.Output, 0, 0, ComandoByte);
 
-        Debug.Log("Resultado: " + plcByte);
+        Debug.Log("Resultado: " + ComandoByte);
+    }
+
+    public void LigarComandoByte()
+    {
+        ComandoByte = 7;
+    }
+
+    public void ZerarComandoByte()
+    {
+        ComandoByte = 0;
     }
 }
