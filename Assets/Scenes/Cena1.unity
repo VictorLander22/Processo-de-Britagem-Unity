@@ -493,7 +493,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 892416760}
         m_TargetAssemblyTypeName: Com, Assembly-CSharp
-        m_MethodName: LigarComandoByte
+        m_MethodName: LigarProcesso
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1077,7 +1077,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 892416760}
         m_TargetAssemblyTypeName: Com, Assembly-CSharp
-        m_MethodName: ZerarComandoByte
+        m_MethodName: EmergenciaProcesso
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2234,7 +2234,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 892416760}
         m_TargetAssemblyTypeName: Com, Assembly-CSharp
-        m_MethodName: ZerarComandoByte
+        m_MethodName: DesligaProcesso
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

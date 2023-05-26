@@ -239,17 +239,30 @@ public class Com : MonoBehaviour
 
 
 
-    public void LigarComandoByte()
+    public void LigarProcesso()
     {
-        vetorDeBit[0] = 7;
-        //  plc.WriteBytes(DataType.Memory, 1, 0, vetorDeBit);
-      //  plc.Write("DB4.DBW0", 4.0f);
+        vetorDeBit[0] = 2;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        //yield WaitForSeconds(0.1);
+        vetorDeBit[0] = 0;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
     }
 
-    public void ZerarComandoByte()
+    public void DesligaProcesso()
     {
-        ComandoByte = 0;
+        vetorDeBit[0] = 4;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        vetorDeBit[0] = 0;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
     }
+
+    public void EmergenciaProcesso(){
+        vetorDeBit[0] = 1;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        vetorDeBit[0] = 0;
+        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+    }
+
 
    
 }
