@@ -99,7 +99,7 @@ public class Esteira : MonoBehaviour
 
     // Mover brita
     // o valor de velocidadeEsteira e multiplicado por negativo pois o sentido de locomocao e no sentido inverso do eixo X.
-    //De x 0 para x -1 e assim por diante
+    // Ex: De x 0 para x -1 e assim por diante
     public void AplicarVelocidadeBrita()
     {
         if (roleta == null)

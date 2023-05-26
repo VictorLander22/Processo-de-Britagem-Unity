@@ -526,69 +526,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82652723}
   m_CullTransparentMesh: 1
---- !u!1 &221739092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 221739094}
-  - component: {fileID: 221739093}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &221739093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221739092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9cc0cd41db95d144a1562a7f62611a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Zelda
-    clip: {fileID: 8300000, guid: 3f729594c4d021042929360270a082c9, type: 3}
-    volume: 0
-    pitch: 1
-    source: {fileID: 0}
-    loop: 1
-  - name: Britador
-    clip: {fileID: 8300000, guid: deff0b3bfed440f41bf5aa382dd7d3a6, type: 3}
-    volume: 0
-    pitch: 1
-    source: {fileID: 0}
-    loop: 0
-  - name: Esteira
-    clip: {fileID: 8300000, guid: 500017eaaf6415e43b8345527e52aa16, type: 3}
-    volume: 0
-    pitch: 1
-    source: {fileID: 0}
-    loop: 0
---- !u!4 &221739094
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221739092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.4339805, y: 3.691675, z: 8.652198}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &255189061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,6 +1596,75 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &866501037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866501039}
+  - component: {fileID: 866501038}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &866501038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866501037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9cc0cd41db95d144a1562a7f62611a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Zelda
+    clip: {fileID: 8300000, guid: 3f729594c4d021042929360270a082c9, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Britador
+    clip: {fileID: 8300000, guid: deff0b3bfed440f41bf5aa382dd7d3a6, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Esteira
+    clip: {fileID: 8300000, guid: 500017eaaf6415e43b8345527e52aa16, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Peneira
+    clip: {fileID: 8300000, guid: 64161840dfca29b4bbe9810a61a039f5, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+--- !u!4 &866501039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866501037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.4339805, y: 3.691675, z: 8.652198}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &968678217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3008,7 +3014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041454aca30efed4ba746fc26a80993c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aud: {fileID: 221739093}
+  aud: {fileID: 0}
   painelMenuInicial: {fileID: 1286191173}
   painelOpcoes: {fileID: 373892489}
   sliderMusic: {fileID: 1516091725}

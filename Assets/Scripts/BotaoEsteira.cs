@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotaoBritadorPrimario : MonoBehaviour
+public class BotaoEsteira : MonoBehaviour
 {
-    public BritadorPrimario britador1;
+    public Esteira esteira1;
 
     public Com com;
     private void OnMouseDown()
     {
-        britador1.ligar();
+        esteira1.ligar();
 
-        com.vetorDeBits[0] = !com.vetorDeBits[0];
+        com.vetorDeBits[1] = !com.vetorDeBits[1];
         com.plcWrite();
     }
 }

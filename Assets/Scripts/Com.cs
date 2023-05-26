@@ -5,7 +5,6 @@ using S7.Net;
 using S7.Net.Types;
 using System;
 using UnityEngine.UI;
-using System.Threading;
 
 // comunica com as DBs
 
@@ -24,16 +23,17 @@ public class Com : MonoBehaviour
 
     public Image statusConexao;
 
-    private Thread plcThread;
 
     private bool isConnecting = false;
 
     public byte ComandoByte; // byte vindo do plc
-    public byte[] vetorDeBits = new byte[8];
+    public byte[] vetorDeBit = new byte[1];
+    public bool[] vetorDeBits = new bool[8];
+
 
     // intervalo de tempo de leitura do plc
     public float intervaloDeTempo = 1.0f; // tempo da leitura de dados do plc
-    private float ultimaExecucao = 0.0f;
+ 
 
     // intervalo de tempo de leitura do plc
 
@@ -53,25 +53,20 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-        // plcConnect(plc);
+         plcConnect(plc);
+
+        InvokeRepeating("plcRead", intervaloDeTempo, intervaloDeTempo);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //   if (plc.IsConnected)
-        if (true)
+        if (plc.IsConnected)
+       // if (true)
         {
             Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
 
-          if (Time.time - ultimaExecucao > intervaloDeTempo)
-            // colocar aqui o código que só deve ser executado a cada intervaloDeTempo segundos
-           {
-                Debug.Log("Passe IF");
-                plcRead();
-                ultimaExecucao = Time.time;
-           }
         }
         else
         {
@@ -79,12 +74,13 @@ public class Com : MonoBehaviour
         }
     }
 
+
+
     /**
-    *Conexao executada em thread separada pra evitar que o programa fique travado durante o processo.
-    */
-    public void plcConnect(Plc plc)
+   *Conexao executada em thread separada pra evitar que o programa fique travado durante o processo.
+   */
+    public async void plcConnect(Plc plc)
     {
-        // se a conexao existir ele a fecha. Evita multiplas conexoes simultaneas.
         StopConnection();
 
         if (isConnecting)
@@ -93,28 +89,60 @@ public class Com : MonoBehaviour
             return;
         }
         isConnecting = true;
-
-        Debug.LogWarning("Tentando conectar ao PLC...");
-        plcThread = new Thread(() =>
+        try
+            {
+            Debug.LogWarning("Tentando conectar ao PLC...");
+            await plc.OpenAsync();
+            Debug.LogWarning("PLC CONECTADO");
+            SetConnectionStatusColor(Color.green);
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                // using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
-                {
-                    plc.Open();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
-            }
-            finally
-            {
-                isConnecting = false;
-            }
-        });
-        plcThread.Start();
+            Debug.LogError("Erro ao conectar ao PLC: " + ex.ToString());
+            SetConnectionStatusColor(Color.red);
+        }
+        finally
+        {
+            isConnecting = false;
+        }
     }
+    
+    /**
+   * Como tinhamos feito antes, por falta de conhecimento da funcao embutida na propia biblioteca. 
+   * Ambos funcionam igualmente pelo testado
+   */
+    //public void plcConnect(Plc plc)
+    //{
+    //    // se a conexao existir ele a fecha. Evita multiplas conexoes simultaneas.
+    //    StopConnection();
+    //    if (isConnecting)
+    //    {
+    //        Debug.LogWarning("Tentaiva de Conexão já em andamento.");
+    //        return;
+    //    }
+    //    isConnecting = true;
+
+    //    Debug.LogWarning("Tentando conectar ao PLC...");
+    //    plcThread = new Thread(() =>
+    //    {
+    //        try
+    //        {
+    //            // using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
+    //            {
+    //                plc.Open();
+    //            }
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
+    //        }
+    //        finally
+    //        {
+    //            isConnecting = false;
+    //        }
+    //    });
+    //    plcThread.Start();
+    //}
 
     // Metodo para o botao de reconexao, agora que temos que passar o plc como parametro. N encontrei maneira mais simples de se fazer
     public void clickplcReConnect()
@@ -132,11 +160,13 @@ public class Com : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (plc != null && plc.IsConnected)
-        {
-            plc.Close();
-        }
+        StopConnection();
     }
+    private void OnApplicationQuit()
+    {
+        StopConnection();
+    }
+
 
     // mudar a cor relativo aos status de conexao
     private void SetConnectionStatusColor(Color color)
@@ -146,22 +176,19 @@ public class Com : MonoBehaviour
 
     public void plcRead()
     {
-        //  ComandoByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+         ComandoByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
         Debug.LogWarning("O valor do ComandoByte e : " + ComandoByte);
+        byte[] bytes = BitConverter.GetBytes(ComandoByte);
 
         // sao 3 equipamentos no trabalho, 3 valores vindos do plc e interagindo com a simulacao po isso 0,1,2.
-        for (int i = 0; i <= 2; i++)
+        for (int i = 0; i < 3; i++)
         {
-            // obtem o i-ésimo bit do byte
-            vetorDeBits[i] = (byte)((ComandoByte >> i) & 1);
-
-            // imprime o bit na tela (pode ser armazenado em um array ou variável, dependendo do seu uso)
+            vetorDeBits[i] = ((bytes[0] >> i) & 1) == 1;
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
         }
-
         if (britador1 != null)
         {
-            if (vetorDeBits[0] == 1) // Britadeira
+            if (vetorDeBits[0] == true) // Britadeira
             {
                 britador1.ligar();
             }
@@ -173,7 +200,7 @@ public class Com : MonoBehaviour
 
         if (esteira1 != null)
         {
-            if (vetorDeBits[1] == 1) // Esteira
+            if (vetorDeBits[1] == true) // Esteira
             {
                 esteira1.ligar();
             }
@@ -184,7 +211,7 @@ public class Com : MonoBehaviour
         }
         if (peneira1 != null)
         {
-            if (vetorDeBits[2] == 1) // Peneira
+            if (vetorDeBits[2] == true) // Peneira
             {
                 peneira1.ligar();
             }
@@ -197,25 +224,32 @@ public class Com : MonoBehaviour
 
     public void plcWrite()
     {
-        for (int i = 7; i >= 0; i--)
+        vetorDeBit[0] = 7;
+        for (int i = 0; i < 3; i++)
         {
-            if (vetorDeBits[i] == 1)
+            if (vetorDeBits[i] == true)
             {
-                ComandoByte |= (byte)(1 << (i));
+                vetorDeBit[0] |= (byte)(1 << i);
             }
         }
-        //  plc.WriteBytes(DataType.Output, 0, 0, ComandoByte);
+        plc.WriteBytes(DataType.Memory, 4, 0, vetorDeBit);
 
         Debug.Log("Resultado: " + ComandoByte);
     }
 
+
+
     public void LigarComandoByte()
     {
-        ComandoByte = 7;
+        vetorDeBit[0] = 7;
+        //  plc.WriteBytes(DataType.Memory, 1, 0, vetorDeBit);
+      //  plc.Write("DB4.DBW0", 4.0f);
     }
 
     public void ZerarComandoByte()
     {
         ComandoByte = 0;
     }
+
+   
 }
