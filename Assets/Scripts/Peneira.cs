@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Peneira : MonoBehaviour
 {
+    [SerializeField]
     private GameObject peneira;
 
     private bool ligado = false;
@@ -28,8 +29,8 @@ public class Peneira : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    // 50 vezes por segundo
+    void FixedUpdate()
     {
         colisaoOcorrendo();
     }
@@ -87,8 +88,9 @@ public class Peneira : MonoBehaviour
             {
                 Debug.LogWarning(" Peneira: Vou destrui a brita");
                 Destroy(brita);
-                StartCoroutine(cena1.SpawnBrita3());
-                StartCoroutine(cena1.SpawnBrita4());
+               StartCoroutine(cena1.SpawnBrita3());
+               StartCoroutine(cena1.SpawnBrita4());
+                StartCoroutine(cena1.SpawnBrita5());
             }
             britasColididas.Clear();
         }

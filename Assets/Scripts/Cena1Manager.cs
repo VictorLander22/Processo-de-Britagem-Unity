@@ -26,6 +26,11 @@ public class Cena1Manager : MonoBehaviour
     [SerializeField]
     private Vector3 brita4Position = new Vector3(-0.73f, 1.53f, 3.223368f);
 
+    public GameObject brita5;
+
+    [SerializeField]
+    private Vector3 brita5Position = new Vector3(-0.73f, 1.53f, 3.223368f);
+
     [SerializeField]
     public void MenuButton(string nomeCena)
     {
@@ -65,7 +70,14 @@ public class Cena1Manager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+    public IEnumerator SpawnBrita5() // spawna as britas na saida primaria
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            Instantiate(brita5, brita5Position, Quaternion.identity);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
 
-   
 
 }

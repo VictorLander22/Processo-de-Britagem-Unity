@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Esteira : MonoBehaviour
 {
+    [SerializeField]
     private GameObject esteira;
 
     private bool ligado = false;
@@ -19,6 +20,8 @@ public class Esteira : MonoBehaviour
     [SerializeField]
     private AudioManager aud;
 
+    Vector3 velocidade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +33,7 @@ public class Esteira : MonoBehaviour
         {
             Debug.LogError("Aud null");
         }
-        addRoletaColider();
+       // addRoletaColider();
     }
 
     // Update is called once per frame
@@ -80,19 +83,19 @@ public class Esteira : MonoBehaviour
         }
     }
 
-    private void addRoletaColider()
-    {
-        Transform filho = transform.Find("Roleta");
+    //private void addRoletaColider()
+    //{
+    //    Transform filho = transform.Find("Roleta");
 
-        if (filho != null)
-        {
-            roleta = filho.GetComponent<RoletaHitBox>();
-        }
-        else
-        {
-            Debug.Log("Esteira: Nenhum objeto filho com o nome  encontrado.");
-        }
-    }
+    //    if (filho != null)
+    //    {
+    //        roleta = filho.GetComponent<RoletaHitBox>();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Esteira: Nenhum objeto filho com o nome  encontrado.");
+    //    }
+    //}
 
     // Mover brita
     // o valor de velocidadeEsteira e multiplicado por negativo pois o sentido de locomocao e no sentido inverso do eixo X.
@@ -105,26 +108,13 @@ public class Esteira : MonoBehaviour
         if (ligado == false)
             return;
 
-        // foreach (Rigidbody brita in roleta.britasColididas)
-        // {
-        //     if (brita != null)
-        //     {
-        //         // Define a velocidade constante no eixo X positivo
-        //         Vector3 velocidade = new Vector3(-velocidadeEsteira, 0, 0);
-
-        //         // Move o objeto usando a velocidade constante
-        //         brita.MovePosition(brita.position + velocidade * Time.deltaTime);
-
-
-        //     }
-        // }
 
         foreach (Rigidbody brita in roleta.britasColididas)
         {
             if (brita != null)
             {
                 // Define a velocidade constante no eixo X positivo
-                Vector3 velocidade = new Vector3(-velocidadeEsteiraX, velocidadeEsteiraY, 0);
+                 velocidade = new Vector3(-velocidadeEsteiraX, velocidadeEsteiraY, 0);
 
                 brita.velocity = velocidade;
             }

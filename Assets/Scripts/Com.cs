@@ -57,7 +57,7 @@ public class Com : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //   if (plc.IsConnected)
         if (true)
@@ -65,13 +65,13 @@ public class Com : MonoBehaviour
             Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
 
-            if (Time.time - ultimaExecucao > intervaloDeTempo)
+          if (Time.time - ultimaExecucao > intervaloDeTempo)
             // colocar aqui o código que só deve ser executado a cada intervaloDeTempo segundos
-            {
+           {
                 Debug.Log("Passe IF");
                 plcRead();
                 ultimaExecucao = Time.time;
-            }
+           }
         }
         else
         {
