@@ -2315,8 +2315,7 @@ MonoBehaviour:
   rack: 0
   slot: 1
   statusConexao: {fileID: 123729145}
-  ComandoByte: 0
-  vetorDeBit: 00
+  ComandoByte: 00
   vetorDeBits: 000000
   intervaloDeTempo: 1
   britador1: {fileID: 1505527149}

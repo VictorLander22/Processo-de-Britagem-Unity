@@ -23,17 +23,13 @@ public class Com : MonoBehaviour
 
     public Image statusConexao;
 
-
     private bool isConnecting = false;
 
-    public byte ComandoByte; // byte vindo do plc
-    public byte[] vetorDeBit = new byte[1];
+    public byte[] ComandoByte = new byte[1]; // byte vindo do plc
     public bool[] vetorDeBits = new bool[8];
-
 
     // intervalo de tempo de leitura do plc
     public float intervaloDeTempo = 1.0f; // tempo da leitura de dados do plc
- 
 
     // intervalo de tempo de leitura do plc
 
@@ -53,7 +49,7 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-         plcConnect(plc);
+        //   plcConnect(plc);
 
         InvokeRepeating("plcRead", intervaloDeTempo, intervaloDeTempo);
     }
@@ -61,20 +57,17 @@ public class Com : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (plc.IsConnected)
-       // if (true)
+        //  if (plc.IsConnected)
+        if (true)
         {
             Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
-
         }
         else
         {
             SetConnectionStatusColor(Color.red);
         }
     }
-
-
 
     /**
    *Conexao executada em thread separada pra evitar que o programa fique travado durante o processo.
@@ -90,7 +83,7 @@ public class Com : MonoBehaviour
         }
         isConnecting = true;
         try
-            {
+        {
             Debug.LogWarning("Tentando conectar ao PLC...");
             await plc.OpenAsync();
             Debug.LogWarning("PLC CONECTADO");
@@ -106,43 +99,6 @@ public class Com : MonoBehaviour
             isConnecting = false;
         }
     }
-    
-    /**
-   * Como tinhamos feito antes, por falta de conhecimento da funcao embutida na propia biblioteca. 
-   * Ambos funcionam igualmente pelo testado
-   */
-    //public void plcConnect(Plc plc)
-    //{
-    //    // se a conexao existir ele a fecha. Evita multiplas conexoes simultaneas.
-    //    StopConnection();
-    //    if (isConnecting)
-    //    {
-    //        Debug.LogWarning("Tentaiva de Conexão já em andamento.");
-    //        return;
-    //    }
-    //    isConnecting = true;
-
-    //    Debug.LogWarning("Tentando conectar ao PLC...");
-    //    plcThread = new Thread(() =>
-    //    {
-    //        try
-    //        {
-    //            // using (plc = new Plc(CpuType.S71200, ipAddress, rack, slot))
-    //            {
-    //                plc.Open();
-    //            }
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            Debug.LogError("Erro ao conectar ao PLC: " + ex.Message);
-    //        }
-    //        finally
-    //        {
-    //            isConnecting = false;
-    //        }
-    //    });
-    //    plcThread.Start();
-    //}
 
     // Metodo para o botao de reconexao, agora que temos que passar o plc como parametro. N encontrei maneira mais simples de se fazer
     public void clickplcReConnect()
@@ -162,11 +118,11 @@ public class Com : MonoBehaviour
     {
         StopConnection();
     }
+
     private void OnApplicationQuit()
     {
         StopConnection();
     }
-
 
     // mudar a cor relativo aos status de conexao
     private void SetConnectionStatusColor(Color color)
@@ -176,14 +132,15 @@ public class Com : MonoBehaviour
 
     public void plcRead()
     {
-         ComandoByte = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
-        Debug.LogWarning("O valor do ComandoByte e : " + ComandoByte);
-        byte[] bytes = BitConverter.GetBytes(ComandoByte);
+        if (plc.IsConnected)
+            ComandoByte[0] = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+
+        Debug.LogWarning("O valor do ComandoByte e : " + ComandoByte[0]);
 
         // sao 3 equipamentos no trabalho, 3 valores vindos do plc e interagindo com a simulacao po isso 0,1,2.
         for (int i = 0; i < 3; i++)
         {
-            vetorDeBits[i] = ((bytes[0] >> i) & 1) == 1;
+            vetorDeBits[i] = ((ComandoByte[0] >> i) & 1) == 1; // passa os lido dos byte do plc para um vetor booleano de comando
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
         }
         if (britador1 != null)
@@ -224,45 +181,52 @@ public class Com : MonoBehaviour
 
     public void plcWrite()
     {
-        vetorDeBit[0] = 7;
+        ComandoByte[0] = 0;
         for (int i = 0; i < 3; i++)
         {
             if (vetorDeBits[i] == true)
             {
-                vetorDeBit[0] |= (byte)(1 << i);
+                ComandoByte[0] |= (byte)(1 << i);
             }
         }
-        plc.WriteBytes(DataType.Memory, 4, 0, vetorDeBit);
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 4, 0, ComandoByte);
 
         Debug.Log("Resultado: " + ComandoByte);
     }
 
-
-
     public void LigarProcesso()
     {
-        vetorDeBit[0] = 2;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        ComandoByte[0] = 2;
+
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
         //yield WaitForSeconds(0.1);
-        vetorDeBit[0] = 0;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        ComandoByte[0] = 0;
+
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
     }
 
     public void DesligaProcesso()
     {
-        vetorDeBit[0] = 4;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
-        vetorDeBit[0] = 0;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+        ComandoByte[0] = 4;
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+
+        ComandoByte[0] = 0;
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
     }
 
-    public void EmergenciaProcesso(){
-        vetorDeBit[0] = 1;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
-        vetorDeBit[0] = 0;
-        plc.WriteBytes(DataType.Memory, 0, 0, vetorDeBit);
+    public void EmergenciaProcesso()
+    {
+        ComandoByte[0] = 1;
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+
+        ComandoByte[0] = 0;
+        if (plc.IsConnected)
+            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
     }
-
-
-   
 }

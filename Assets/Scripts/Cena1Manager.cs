@@ -70,6 +70,7 @@ public class Cena1Manager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
     public IEnumerator SpawnBrita5() // spawna as britas na saida primaria
     {
         for (int i = 0; i < 50; i++)
@@ -78,6 +79,4 @@ public class Cena1Manager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
     }
-
-
 }
