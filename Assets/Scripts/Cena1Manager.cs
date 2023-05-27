@@ -49,7 +49,7 @@ public class Cena1Manager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Instantiate(brita2, brita2Position, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 
@@ -73,7 +73,7 @@ public class Cena1Manager : MonoBehaviour
 
     public IEnumerator SpawnBrita5() // spawna as britas na saida primaria
     {
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 35; i++)
         {
             Instantiate(brita5, brita5Position, Quaternion.identity);
             yield return new WaitForSeconds(0.01f);
