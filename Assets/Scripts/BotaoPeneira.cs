@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class BotaoPeneira : MonoBehaviour
 {
-    public Peneira peneira1;
-
     public Com com;
+
     private void OnMouseDown()
     {
-        peneira1.ligar();
+        com.peneira1.ligar();
 
         com.vetorDeBits[2] = !com.vetorDeBits[2];
         com.plcWrite();

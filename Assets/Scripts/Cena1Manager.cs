@@ -6,27 +6,32 @@ using UnityEngine.SceneManagement;
 
 public class Cena1Manager : MonoBehaviour
 {
-    public GameObject brita1;
+    [SerializeField]
+    private GameObject brita1;
 
     [SerializeField]
     private Vector3 brita1Position = new Vector3(4f, 12f, 10.5f);
 
-    public GameObject brita2;
+    [SerializeField]
+    private GameObject brita2;
 
     [SerializeField]
     private Vector3 brita2Position = new Vector3(4f, 12f, 10.5f);
 
-    public GameObject brita3;
+    [SerializeField]
+    private GameObject brita3;
 
     [SerializeField]
     private Vector3 brita3Position = new Vector3(-0.73f, 1.53f, 3.223368f);
 
-    public GameObject brita4;
+    [SerializeField]
+    private GameObject brita4;
 
     [SerializeField]
     private Vector3 brita4Position = new Vector3(-0.73f, 1.53f, 3.223368f);
 
-    public GameObject brita5;
+    [SerializeField]
+    private GameObject brita5;
 
     [SerializeField]
     private Vector3 brita5Position = new Vector3(-0.73f, 1.53f, 3.223368f);
