@@ -1626,9 +1626,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Zelda
+  - name: Musica de fundo
     clip: {fileID: 8300000, guid: 3f729594c4d021042929360270a082c9, type: 3}
-    volume: 1
+    volume: 0.1
     pitch: 1
     source: {fileID: 0}
     loop: 1

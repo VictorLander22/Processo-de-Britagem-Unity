@@ -51,7 +51,7 @@ public class Cena1Manager : MonoBehaviour
 
     public IEnumerator SpawnBrita2() // spawna a brita q sai do britador e vai pra esteira
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             Instantiate(brita2, brita2Position, Quaternion.identity);
             yield return new WaitForSeconds(0.3f);

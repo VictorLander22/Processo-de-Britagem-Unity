@@ -15,6 +15,13 @@ public class CameraController : MonoBehaviour
     private Vector2 leftThumbstick;
     private Vector2 rightThumbstick;
 
+    private Transform myTransform;
+
+    void Awake()
+    {
+        myTransform = transform;
+    }
+
     void Start()
     {
         // Procura os controladores Oculus Touch na cena
@@ -50,12 +57,14 @@ public class CameraController : MonoBehaviour
         {
             // Translacao -polegar esquerdo
             leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out leftThumbstick);
-            transform.position += transform.forward * leftThumbstick.y * moveSpeed * Time.deltaTime;
-            transform.position += transform.right * leftThumbstick.x * moveSpeed * Time.deltaTime;
+            myTransform.position +=
+                myTransform.forward * leftThumbstick.y * moveSpeed * Time.deltaTime;
+            myTransform.position +=
+                myTransform.right * leftThumbstick.x * moveSpeed * Time.deltaTime;
 
             // Rotacao - polegar direito
             rightController.TryGetFeatureValue(CommonUsages.primary2DAxis, out rightThumbstick);
-            transform.Rotate(Vector3.up, rightThumbstick.x * rotationSpeed * Time.deltaTime);
+            myTransform.Rotate(Vector3.up, rightThumbstick.x * rotationSpeed * Time.deltaTime);
         }
     }
 }

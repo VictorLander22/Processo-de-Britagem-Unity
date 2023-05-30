@@ -25,11 +25,11 @@ public class Com : MonoBehaviour
 
     private bool isConnecting = false;
 
-    public byte[] ComandoByte = new byte[1]; // byte vindo do plc
+    public byte[] PlcByte = new byte[1]; // byte vindo do plc
     public bool[] vetorDeBits = new bool[8];
 
     // intervalo de tempo de leitura do plc
-    public float intervaloDeTempo = 1.0f; // tempo da leitura de dados do plc
+    public float intervaloDeTempoDeLeitura = 1.0f; // tempo da leitura de dados do plc
 
     // intervalo de tempo de leitura do plc
 
@@ -51,7 +51,7 @@ public class Com : MonoBehaviour
 
         //   plcConnect(plc);
 
-        InvokeRepeating("plcRead", intervaloDeTempo, intervaloDeTempo);
+        InvokeRepeating("plcRead", intervaloDeTempoDeLeitura, intervaloDeTempoDeLeitura);
     }
 
     // Update is called once per frame
@@ -133,14 +133,14 @@ public class Com : MonoBehaviour
     public void plcRead()
     {
         if (plc.IsConnected)
-            ComandoByte[0] = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
+            PlcByte[0] = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
 
-        Debug.LogWarning("O valor do ComandoByte e : " + ComandoByte[0]);
+        Debug.LogWarning("O valor do PlcByte e : " + PlcByte[0]);
 
         // sao 3 equipamentos no trabalho, 3 valores vindos do plc e interagindo com a simulacao po isso 0,1,2.
         for (int i = 0; i < 3; i++)
         {
-            vetorDeBits[i] = ((ComandoByte[0] >> i) & 1) == 1; // passa os lido dos byte do plc para um vetor booleano de comando
+            vetorDeBits[i] = ((PlcByte[0] >> i) & 1) == 1; // passa os lido dos byte do plc para um vetor booleano de comando
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
         }
         if (britador1 != null)
@@ -181,52 +181,52 @@ public class Com : MonoBehaviour
 
     public void plcWrite()
     {
-        ComandoByte[0] = 0;
+        PlcByte[0] = 0;
         for (int i = 0; i < 3; i++)
         {
             if (vetorDeBits[i] == true)
             {
-                ComandoByte[0] |= (byte)(1 << i);
+                PlcByte[0] |= (byte)(1 << i);
             }
         }
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 4, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 4, 0, PlcByte);
 
-        Debug.Log("Resultado: " + ComandoByte);
+        Debug.Log("Resultado: " + PlcByte);
     }
 
     public void LigarProcesso()
     {
-        ComandoByte[0] = 2;
+        PlcByte[0] = 2;
 
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
         //yield WaitForSeconds(0.1);
-        ComandoByte[0] = 0;
+        PlcByte[0] = 0;
 
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
     }
 
     public void DesligaProcesso()
     {
-        ComandoByte[0] = 4;
+        PlcByte[0] = 4;
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
 
-        ComandoByte[0] = 0;
+        PlcByte[0] = 0;
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
     }
 
     public void EmergenciaProcesso()
     {
-        ComandoByte[0] = 1;
+        PlcByte[0] = 1;
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
 
-        ComandoByte[0] = 0;
+        PlcByte[0] = 0;
         if (plc.IsConnected)
-            plc.WriteBytes(DataType.Memory, 0, 0, ComandoByte);
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcByte);
     }
 }
