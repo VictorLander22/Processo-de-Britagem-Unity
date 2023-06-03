@@ -9,20 +9,18 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-    // Start is called before the first frame update
     void Start()
     {
         Play("Musica de fundo");
     }
 
-    /// Awake is called when the script instance is being loaded.
     void Awake()
     {
         // garante que n vai carregar mais de uma lista de arquivos de som
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Esta causando um bug sair e voltar a cena de menu principal.Retorna NullException.
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -40,9 +38,6 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
     }
-
-    // Update is called once per frame
-    void Update() { }
 
     public void Play(string name)
     {

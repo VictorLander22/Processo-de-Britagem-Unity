@@ -16,7 +16,6 @@ public class Peneira : MonoBehaviour
     [SerializeField]
     private Cena1Manager cena1;
 
-    // Start is called before the first frame update
     void Start()
     {
         peneira = GameObject.Find("Peneira");

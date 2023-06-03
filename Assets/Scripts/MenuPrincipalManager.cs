@@ -50,8 +50,6 @@ public class MenuPrincipalManager : MonoBehaviour
             sliderVolum.value = savedSoundVolume;
             slideVolume(savedSoundVolume);
         }
-
-        //Exclusivo para a quando for a BUILD. Nao funciona pro PLAYMODE(teste) do UNITY
     }
 
     public void abrir(string nomeCena) // metodo do botao Abrir do menu
@@ -66,8 +64,8 @@ public class MenuPrincipalManager : MonoBehaviour
 
         if (aud.sounds.Length > 0 && aud.sounds[1].source != null)
         {
-            sliderMusic.value = aud.sounds[0].source.volume;
-            sliderVolum.value = aud.sounds[1].source.volume; // como todos os equipamentos vao ter teoricamente o mesmo som ele. O slider pode recuperar o valor de um deles somente.
+            sliderMusic.value = aud.sounds[0].source.volume; // musica
+            sliderVolum.value = aud.sounds[1].source.volume; // equipamentos
         }
     }
 
@@ -85,7 +83,13 @@ public class MenuPrincipalManager : MonoBehaviour
 
     public void slideMusica(float slideValue)
     {
-       if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
+        if (
+            aud != null
+            && aud.sounds != null
+            && aud.sounds.Length > 0
+            && aud.sounds[0] != null
+            && aud.sounds[0].source != null
+        )
         {
             aud.sounds[0].volume = slideValue;
             aud.sounds[0].source.volume = slideValue;
@@ -103,14 +107,20 @@ public class MenuPrincipalManager : MonoBehaviour
    */
     public void slideVolume(float slideValue)
     {
-       if (aud != null && aud.sounds != null && aud.sounds.Length > 0 && aud.sounds[0] != null && aud.sounds[0].source != null)
+        if (
+            aud != null
+            && aud.sounds != null
+            && aud.sounds.Length > 0
+            && aud.sounds[0] != null
+            && aud.sounds[0].source != null
+        )
         {
             foreach (Sound s in aud.sounds)
             {
                 if (s == null || s.source == null || s == aud.sounds[0])
                     continue;
                 s.source.volume = slideValue;
-                s.volume=slideValue;
+                s.volume = slideValue;
             }
             //So funciona em caso de ser a BUILD
             PlayerPrefs.SetFloat("soundVolume", slideValue);

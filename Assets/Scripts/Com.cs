@@ -100,7 +100,7 @@ public class Com : MonoBehaviour
         }
     }
 
-    // Metodo para o botao de reconexao, agora que temos que passar o plc como parametro. N encontrei maneira mais simples de se fazer
+    // Metodo para o botao de reconexao, agora que temos que passar o plc como parametro.
     public void clickplcReConnect()
     {
         plcConnect(plc);

@@ -16,7 +16,6 @@ public class BritadorPrimario : MonoBehaviour
 
     private GameObject britaColidida;
 
-    // Start is called before the first frame update
     void Start()
     {
         britador = GameObject.Find("Britadeira");
@@ -29,7 +28,6 @@ public class BritadorPrimario : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         colisaoOcorrendo();
@@ -71,20 +69,6 @@ public class BritadorPrimario : MonoBehaviour
             StartCoroutine(cena1.SpawnBrita2());
         }
     }
-
-    // private IEnumerator OnCollisionStay(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Brita1"))
-    //     {
-    //         Debug.LogWarning("Brita esta em contato com hit box");
-
-    //         if ( ligado == true)
-    //         {
-    //             yield return new WaitForSeconds(0.5f);
-    //             Destroy(collision.gameObject);
-    //         }
-    //     }
-    // }
 
     private void startAnimations()
     {

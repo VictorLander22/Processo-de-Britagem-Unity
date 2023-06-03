@@ -22,7 +22,6 @@ public class Esteira : MonoBehaviour
 
     Vector3 velocidade;
 
-    // Start is called before the first frame update
     void Start()
     {
         esteira = GameObject.Find("Esteira");
@@ -33,10 +32,8 @@ public class Esteira : MonoBehaviour
         {
             Debug.LogError("Aud null");
         }
-       // addRoletaColider();
     }
 
-    // Update is called once per frame
     void Update()
     {
         AplicarVelocidadeBrita();
@@ -83,20 +80,6 @@ public class Esteira : MonoBehaviour
         }
     }
 
-    //private void addRoletaColider()
-    //{
-    //    Transform filho = transform.Find("Roleta");
-
-    //    if (filho != null)
-    //    {
-    //        roleta = filho.GetComponent<RoletaHitBox>();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Esteira: Nenhum objeto filho com o nome  encontrado.");
-    //    }
-    //}
-
     // Mover brita
     // o valor de velocidadeEsteira e multiplicado por negativo pois o sentido de locomocao e no sentido inverso do eixo X.
     // Ex: De x 0 para x -1 e assim por diante
@@ -108,13 +91,12 @@ public class Esteira : MonoBehaviour
         if (ligado == false)
             return;
 
-
         foreach (Rigidbody brita in roleta.britasColididas)
         {
             if (brita != null)
             {
                 // Define a velocidade constante no eixo X positivo
-                 velocidade = new Vector3(-velocidadeEsteiraX, velocidadeEsteiraY, 0);
+                velocidade = new Vector3(-velocidadeEsteiraX, velocidadeEsteiraY, 0);
 
                 brita.velocity = velocidade;
             }

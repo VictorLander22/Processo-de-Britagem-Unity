@@ -67,7 +67,7 @@ public class Cena1Manager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnBrita4() // spawna as britas na saida primaria
+    public IEnumerator SpawnBrita4() // spawna as britas na saida secundaria
     {
         for (int i = 0; i < 12; i++)
         {
@@ -76,7 +76,7 @@ public class Cena1Manager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnBrita5() // spawna as britas na saida primaria
+    public IEnumerator SpawnBrita5() // spawna as britas na saida terciaria
     {
         for (int i = 0; i < 35; i++)
         {

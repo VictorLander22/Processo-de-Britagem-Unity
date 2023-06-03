@@ -5,10 +5,10 @@ using UnityEngine;
 public class DestroyPersonalClass : MonoBehaviour // classe autoral para destruir objetos no jogo.
 //N confundir com os metodos destroy do propio Unity
 {
-    // funcao para destruir todos os objetos com uma tag em especifica.
-
     private const float destroyInterval = 60f; // Intervalo de tempo para destruir os objetos (3 minutos)
-    private float lastDestroyTime = 0f; // Armazena o tempo da última destruição
+    private float lastDestroyTime = 0f; // Armazena o tempo da ï¿½ltima destruiï¿½ï¿½o
+
+    // funcao para destruir todos os objetos com uma tag em especifica.
     public void DestroyObjectsWithTags(params string[] tags)
     {
         foreach (string tag in tags)
@@ -24,7 +24,7 @@ public class DestroyPersonalClass : MonoBehaviour // classe autoral para destrui
 
     public void DestroyAllBritas()
     {
-        DestroyObjectsWithTags("Brita1", "Brita2", "Brita3", "Brita4","Brita5");
+        DestroyObjectsWithTags("Brita1", "Brita2", "Brita3", "Brita4", "Brita5");
     }
 
     private void FixedUpdate()
