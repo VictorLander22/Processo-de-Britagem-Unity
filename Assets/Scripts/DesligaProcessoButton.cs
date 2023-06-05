@@ -9,14 +9,10 @@ public class DesligaProcessoButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        com.britador1.parar();
-        com.esteira1.parar();
-        com.peneira1.parar();
+      //  com.britador1.parar();
+       // com.esteira1.parar();
+       // com.peneira1.parar();
 
-        com.vetorDeBits[0] = false;
-        com.vetorDeBits[1] = false;
-        com.vetorDeBits[2] = false;
-
-        com.plcWrite();
+        com.DesligaProcesso();
     }
 }

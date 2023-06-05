@@ -8,9 +8,12 @@ public class BotaoPeneira : MonoBehaviour
 
     private void OnMouseDown()
     {
-        com.peneira1.ligar();
-
-        com.vetorDeBits[2] = !com.vetorDeBits[2];
+       if(com.PlcWriteByte[0] >= 128) {
+            if (com.vetorDeBits[3] == true){
+            com.PlcWriteByte[0]= (byte)(com.PlcWriteByte[0] -(64));
+        } else
+            com.PlcWriteByte[0]=(byte)(com.PlcWriteByte[0] +(64));
         com.plcWrite();
+        }
     }
 }

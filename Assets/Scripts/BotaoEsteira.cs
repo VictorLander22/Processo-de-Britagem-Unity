@@ -8,9 +8,12 @@ public class BotaoEsteira : MonoBehaviour
     public Com com;
     private void OnMouseDown()
     {
-        com.esteira1.ligar();
-
-        com.vetorDeBits[1] = !com.vetorDeBits[1];
+     if(com.PlcWriteByte[0] >= 128) {
+            if (com.vetorDeBits[2] == true){
+            com.PlcWriteByte[0]= (byte)(com.PlcWriteByte[0] -(32));
+        } else
+            com.PlcWriteByte[0]=(byte)(com.PlcWriteByte[0] +(32));
         com.plcWrite();
+        }
     }
 }

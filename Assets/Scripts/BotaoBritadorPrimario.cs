@@ -9,9 +9,12 @@ public class BotaoBritadorPrimario : MonoBehaviour
 
     private void OnMouseDown()
     {
-        com.britador1.ligar();
-
-        com.vetorDeBits[0] = !com.vetorDeBits[0];
+        if(com.PlcWriteByte[0] >= 128) {
+            if (com.vetorDeBits[1] == true){
+            com.PlcWriteByte[0]= (byte)(com.PlcWriteByte[0] -(16));
+        } else
+            com.PlcWriteByte[0]=(byte)(com.PlcWriteByte[0] +(16));
         com.plcWrite();
+        }
     }
 }
