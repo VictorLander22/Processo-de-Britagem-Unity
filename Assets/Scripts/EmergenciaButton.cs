@@ -15,12 +15,11 @@ public class EmergenciaButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        com.vetorDeBits[0] = false;
-        com.vetorDeBits[1] = false;
-        com.vetorDeBits[2] = false;
-
         com.EmergenciaProcesso();
         roleta1.LimparListaBritas();
         dest1.DestroyAllBritas();
+
+        if(!com.plc.IsConnected)
+            com.PlcReadByte[0]=0;
     }
 }

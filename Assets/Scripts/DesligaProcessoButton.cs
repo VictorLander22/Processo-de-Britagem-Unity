@@ -12,7 +12,8 @@ public class DesligaProcessoButton : MonoBehaviour
       //  com.britador1.parar();
        // com.esteira1.parar();
        // com.peneira1.parar();
-
+  if(!com.plc.IsConnected)
+             com.PlcReadByte[0]=0;
         com.DesligaProcesso();
     }
 }

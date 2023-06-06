@@ -92,8 +92,8 @@ public class Com : MonoBehaviour
             Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
 
-              PlcWriteByte[0] = (plc.ReadBytes(DataType.Memory, 0, 0, 1))[0];
-              Debug.LogWarning("O valor do PlcWrite no connect e : " + PlcWriteByte[0]);
+        
+
         }
         catch (Exception ex)
         {
@@ -139,8 +139,9 @@ public class Com : MonoBehaviour
     public void plcRead()
     {
         if (plc.IsConnected)
+        {
             PlcReadByte[0] = (plc.ReadBytes(DataType.Output, 0, 0, 1))[0]; //so o primeiro membro do vetor q esta vindo com valor.
-
+        }
         Debug.LogWarning("O valor do PlcByte e : " + PlcReadByte[0]);
 
         // sao 4 equipamentos no trabalho, 4 valores vindos do plc e interagindo com a simulacao po isso 0,1,2 e 3
