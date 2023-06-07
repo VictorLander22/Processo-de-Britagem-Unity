@@ -127,14 +127,4 @@ public class MenuPrincipalManager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
-
-    /**
-     * Codigo para mudar a sensibilidade do controle do oculus quest dentro da execucao da build.
-     * O valor de x e o q sai do slider e passa direto para os objetos.
-     */
-    public void slideSensibilidade(float x)
-    {
-        // controle.moveSpeed = x;
-        // controle.rotationSpeed = x;
-    }
 }

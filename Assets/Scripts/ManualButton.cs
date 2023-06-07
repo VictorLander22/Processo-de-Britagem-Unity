@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class ManualButton : MonoBehaviour
 {
+    public Com com;
 
-     public Com com;
-
-
-     private void OnMouseDown()
+    private void OnMouseDown() // Para cliques com o mouse
     {
-        if(com.PlcWriteByte[0] < 128)
+        Action();
+    }
+
+    private void OnCollisionEnter(Collision other) // procura colisao com os controles vr
+    {
+        if (other.collider.gameObject.CompareTag("VR controller"))
         {
-         com.PlcWriteByte[0] = (byte) (com.PlcWriteByte[0] + 128);
+            Debug.LogWarning("Botao Liga Processo: Colisao detectada com VR controller");
+            Action();
+            // Faça alguma ação específica para a colisão com um objeto VR controller
+        }
+    }
+
+    private void Action()
+    {
+        if (com.PlcWriteByte[0] < 128)
+        {
+            com.PlcWriteByte[0] = (byte)(com.PlcWriteByte[0] + 128);
         }
         else
         {
-         com.PlcWriteByte[0]=(byte)(com.PlcWriteByte[0]- 128);
+            com.PlcWriteByte[0] = (byte)(com.PlcWriteByte[0] - 128);
         }
-       
-       com.plcWrite();
+
+        com.plcWrite();
     }
 }
