@@ -9,6 +9,7 @@ public class DesligaProcessoButton : MonoBehaviour
 
     private void OnMouseDown() // Para cliques com o mouse
     {
+        Debug.LogWarning("Desliga Processo: passei pelo OnMouseDown");
         Action();
     }
 

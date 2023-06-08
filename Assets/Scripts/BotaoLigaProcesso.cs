@@ -14,6 +14,7 @@ public class BotaoLigaProcesso : MonoBehaviour
 
     private void OnMouseDown() // Para cliques com o mouse
     {
+        Debug.LogWarning("Liga Processo: passei pelo OnMouseDown");
         Action();
     }
 
