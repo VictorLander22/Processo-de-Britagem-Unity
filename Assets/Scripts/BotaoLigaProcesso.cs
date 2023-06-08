@@ -17,17 +17,17 @@ public class BotaoLigaProcesso : MonoBehaviour
         Action();
     }
 
-    private void OnCollisionEnter(Collision other) // procura colisao com os controles vr
-    {
-        if (other.collider.gameObject.CompareTag("VR controller"))
-        {
-            Debug.LogWarning("Botao Liga Processo: Colisao detectada com VR controller");
-            Action();
-            // Faça alguma ação específica para a colisão com um objeto VR controller
-        }
-    }
+    //  private void OnCollisionEnter(Collision other) // procura colisao com os controles vr
+    //  {
+    //    if (other.collider.gameObject.CompareTag("VR controller"))
+    // {
+    //Debug.LogWarning("Botao Liga Processo: Colisao detectada com VR controller");
+    //          Action();
+    // Faça alguma ação específica para a colisão com um objeto VR controller
+    //    }
+    //}
 
-    private void Action()
+    public void Action()
     {
         // com.britador1.ligar();
         //  com.esteira1.ligar();

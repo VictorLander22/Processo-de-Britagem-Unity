@@ -12,17 +12,17 @@ public class BotaoBrita1 : MonoBehaviour
         Action();
     }
 
-    private void OnCollisionEnter(Collision other) // procura colisao com os controles vr
-    {
-        if (other.collider.gameObject.CompareTag("VR controller"))
-        {
-            Debug.LogWarning("Botao Liga Processo: Colisao detectada com VR controller");
-            Action();
-            // Faça alguma ação específica para a colisão com um objeto VR controller
-        }
-    }
+    //  private void OnCollisionEnter(Collision other) // procura colisao com os controles vr
+    //  {
+    //    if (other.collider.gameObject.CompareTag("VR controller"))
+    // {
+    //Debug.LogWarning("Botao Liga Processo: Colisao detectada com VR controller");
+    //          Action();
+    // Faça alguma ação específica para a colisão com um objeto VR controller
+    //    }
+    //}
 
-    void Action()
+    public void Action()
     {
         Debug.LogWarning("Cliquei botao");
         StartCoroutine(cena1.SpawnBrita1());

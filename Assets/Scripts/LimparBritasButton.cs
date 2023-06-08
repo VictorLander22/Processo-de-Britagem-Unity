@@ -2,16 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmergenciaButton : MonoBehaviour
+public class LimparBritasButton : MonoBehaviour
 {
     [SerializeField]
-    private Com com;
-
-    [SerializeField]
     private DestroyPersonalClass dest1;
-
-    [SerializeField]
-    private RoletaHitBox roleta1;
 
     private void OnMouseDown() // Para cliques com o mouse
     {
@@ -30,11 +24,6 @@ public class EmergenciaButton : MonoBehaviour
 
     public void Action()
     {
-        com.EmergenciaProcesso();
-        roleta1.LimparListaBritas();
         dest1.DestroyAllBritas();
-
-        if (!com.plc.IsConnected)
-            com.PlcReadByte[0] = 0;
     }
 }
