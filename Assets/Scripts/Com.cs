@@ -103,6 +103,7 @@ public class Com : MonoBehaviour
         finally
         {
             isConnecting = false;
+            PlcWriteByte[0] = (plc.ReadBytes(DataType.Memory, 0, 0, 1))[0];
         }
     }
 
@@ -216,11 +217,11 @@ public class Com : MonoBehaviour
     if(PlcWriteByte[0] >= 128)
     return;
 
-        PlcWriteByte[0] = 2;
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(2));
 
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
-        PlcWriteByte[0] = 0;
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] -(2));
 
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
@@ -231,23 +232,24 @@ public class Com : MonoBehaviour
         if(PlcWriteByte[0] >= 128)
     return;
 
-        PlcWriteByte[0] = 4;
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(4));
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
 
-        PlcWriteByte[0] = 0;
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] -(4));
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
     }
 
     public void EmergenciaProcesso()
     {
-       if(PlcWriteByte[0] >= 1)
-        PlcWriteByte[0] = 0;
+       if(PlcWriteByte[0] % 2 ==0)
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(1));
         else
-         PlcWriteByte[0] = 1;
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] - (1));
 
         if (plc.IsConnected)
            plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
+
     }
 }
