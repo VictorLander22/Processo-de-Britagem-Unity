@@ -29,7 +29,6 @@ public class Com : MonoBehaviour
     public byte[] PlcWriteByte = new byte[1]; // byte do unity pro plc
     public bool[] vetorDeBits = new bool[8];
 
-
     // intervalo de tempo de leitura do plc
     public float intervaloDeTempoDeLeitura = 1.0f; // tempo da leitura de dados do plc
 
@@ -51,7 +50,7 @@ public class Com : MonoBehaviour
         plc = new Plc(CpuType.S71200, ipAddress, rack, slot);
         statusConexao = GameObject.Find("StatusConexaoObject").GetComponent<Image>();
 
-         plcConnect(plc);
+        plcConnect(plc);
 
         InvokeRepeating("plcRead", intervaloDeTempoDeLeitura, intervaloDeTempoDeLeitura);
     }
@@ -59,8 +58,7 @@ public class Com : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
-      //    if (true)
+        //    if (true)
         if (plc.IsConnected)
         {
             Debug.LogWarning("PLC CONECTADO");
@@ -77,7 +75,7 @@ public class Com : MonoBehaviour
    */
     public async void plcConnect(Plc plc)
     {
-       StopConnection();
+        StopConnection();
 
         if (isConnecting)
         {
@@ -91,9 +89,6 @@ public class Com : MonoBehaviour
             await plc.OpenAsync();
             Debug.LogWarning("PLC CONECTADO");
             SetConnectionStatusColor(Color.green);
-
-        
-
         }
         catch (Exception ex)
         {
@@ -151,14 +146,14 @@ public class Com : MonoBehaviour
             vetorDeBits[i] = ((PlcReadByte[0] >> i) & 1) == 1; // passa os lido dos byte do plc para um vetor booleano de comando
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
         }
-        if(true) // Alimentador 
+        if (true) // Alimentador
         {
-            if(vetorDeBits[0] == true)
+            if (vetorDeBits[0] == true)
             {
                 Debug.Log("1");
             }
             else
-            Debug.Log("-1");
+                Debug.Log("-1");
         }
         if (britador1 != null)
         {
@@ -198,13 +193,6 @@ public class Com : MonoBehaviour
 
     public void plcWrite()
     {
-        //for (int i = 0; i <=3; i++)
-      //  {
-          //  if (vetorDeBits[i] == true)
-           // {
-               // PlcWriteByte[0] |= (byte)(1 << i);
-         //   }
-       // }
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
 
@@ -213,15 +201,14 @@ public class Com : MonoBehaviour
 
     public void LigarProcesso()
     {
+        if (PlcWriteByte[0] >= 128)
+            return;
 
-    if(PlcWriteByte[0] >= 128)
-    return;
-
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(2));
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] + (2));
 
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] -(2));
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] - (2));
 
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
@@ -229,27 +216,26 @@ public class Com : MonoBehaviour
 
     public void DesligaProcesso()
     {
-        if(PlcWriteByte[0] >= 128)
-    return;
+        if (PlcWriteByte[0] >= 128)
+            return;
 
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(4));
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] + (4));
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
 
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] -(4));
+        PlcWriteByte[0] = (byte)(PlcWriteByte[0] - (4));
         if (plc.IsConnected)
             plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
     }
 
     public void EmergenciaProcesso()
     {
-       if(PlcWriteByte[0] % 2 ==0)
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] +(1));
+        if (PlcWriteByte[0] % 2 == 0)
+            PlcWriteByte[0] = (byte)(PlcWriteByte[0] + (1));
         else
-        PlcWriteByte[0] = (byte)(PlcWriteByte[0] - (1));
+            PlcWriteByte[0] = (byte)(PlcWriteByte[0] - (1));
 
         if (plc.IsConnected)
-           plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
-
+            plc.WriteBytes(DataType.Memory, 0, 0, PlcWriteByte);
     }
 }
