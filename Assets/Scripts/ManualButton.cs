@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ManualButton : MonoBehaviour
 {
     public Com com;
+    public TextMeshPro label;
 
     private void OnMouseDown() // Para cliques com o mouse
     {
@@ -25,10 +27,12 @@ public class ManualButton : MonoBehaviour
     {
         if (com.PlcWriteByte[0] < 128)
         {
+            label.text = "Manual";
             com.PlcWriteByte[0] = (byte)(com.PlcWriteByte[0] + 128);
         }
         else
         {
+            label.text = "Automático";
             com.PlcWriteByte[0] = (byte)(com.PlcWriteByte[0] - 128);
         }
 

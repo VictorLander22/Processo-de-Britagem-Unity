@@ -36,6 +36,7 @@ public class Com : MonoBehaviour
 
     // Objetos da planta
 
+    public Alimentador alimentador1;
     public BritadorPrimario britador1;
     public Esteira esteira1;
     public Peneira peneira1;
@@ -146,14 +147,14 @@ public class Com : MonoBehaviour
             vetorDeBits[i] = ((PlcReadByte[0] >> i) & 1) == 1; // passa os lido dos byte do plc para um vetor booleano de comando
             Debug.Log("Bit " + i + ": " + vetorDeBits[i]);
         }
-        if (true) // Alimentador
+        if (alimentador1 != null) // Alimentador
         {
             if (vetorDeBits[0] == true)
             {
-                Debug.Log("1");
+                alimentador1.ligar();
             }
             else
-                Debug.Log("-1");
+                alimentador1.parar();
         }
         if (britador1 != null)
         {
